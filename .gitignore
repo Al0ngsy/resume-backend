@@ -1,0 +1,19 @@
+# Python
+*.py[cod]
+__pycache__/
+*.egg-info/
+dist/
+.venv/
+.env
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+data/          # Personal data — don't commit
+Specification.md
