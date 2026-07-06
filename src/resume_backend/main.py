@@ -7,7 +7,10 @@ import uuid
 
 class RequestIDMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
-        requestId = str(uuid.uuid4())
+        # If the incoming request already has an X-Request-ID header (e.g. from the frontend
+        # for an ongoing conversation), reuse it so rateLimitPerConversation can track it.
+        # Otherwise, generate a new UUID.
+        requestId = request.headers.get("X-Request-ID", str(uuid.uuid4()))
         # adds the request ID to the request state so that it can be accessed in the route handlers
         request.state.request_id = requestId
         # forwards the incoming request down the pipeline
@@ -24,7 +27,7 @@ app.add_middleware(
 )
 app.add_middleware(RequestIDMiddleware)
 
-start_time = time.time()
+startTime = time.time()
 
 @app.get("/")
 async def root():
@@ -35,6 +38,6 @@ async def health():
   return {
     "status": "ok",
     "timestamp": datetime.now().isoformat(),       
-    "uptime_seconds": int(time.time() - start_time)
+    "uptimeSeconds": int(time.time() - startTime)
   }
 
