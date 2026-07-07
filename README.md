@@ -23,7 +23,7 @@ uv sync
 cp .env.example .env
 
 # Run dev server
-uv run uvicorn resume_backend.main:app --reload
+uv run uvicorn src.main:app --reload
 ```
 
 Open [http://localhost:8000](http://localhost:8000). Health check at `/api/health`.
