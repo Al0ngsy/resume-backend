@@ -1,9 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import time
 from datetime import datetime
 from starlette.middleware.base import BaseHTTPMiddleware
 import uuid
+from logging_config import get_bound_logger, get_logger, setup_logging
+
+setup_logging()
 
 class RequestIDMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
@@ -18,6 +21,7 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
         # modifies the response before returning it to the client - adding custom header with the request ID
         response.headers["X-Request-ID"] = requestId
         return response
+    
 
 app = FastAPI()
 app.add_middleware(
@@ -27,6 +31,16 @@ app.add_middleware(
 )
 app.add_middleware(RequestIDMiddleware)
 
+@app.middleware("http")
+async def bind_logger_middleware(request: Request, call_next):
+    # Create a bound logger for EVERY incoming request
+    request.state.logger = get_bound_logger(
+        requestId=request.headers.get("x-request-id", str(uuid.uuid4())),
+        conversationId=request.headers.get("x-conversation-id", "unknown"),
+        clientId=request.headers.get("x-client-id", "unknown")
+    )
+    return await call_next(request)
+
 startTime = time.time()
 
 @app.get("/")
@@ -35,6 +49,7 @@ async def root():
 
 @app.get("/api/health")
 async def health():
+  get_logger('health').info("Health check arrives.")
   return {
     "status": "ok",
     "timestamp": datetime.now().isoformat(),       
