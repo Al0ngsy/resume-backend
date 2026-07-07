@@ -27,6 +27,7 @@ def setup_logging() -> None:
   )
 
 # for static context
+# '->' pre-define return types of the function
 def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
     """
       Get a structlog logger. Pass __name__ to get a module-scoped logger.
@@ -45,6 +46,7 @@ def get_bound_logger(
       conversation_id, and client_ip — no need to pass them each time.
     """
     return structlog.get_logger().bind(
+        # bind create a logger copy with following context permanently attached
         requestId=requestId,
         conversationId=conversationId,
         clientId=clientId
