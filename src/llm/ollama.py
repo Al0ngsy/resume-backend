@@ -39,6 +39,6 @@ class OllamaProvider(LLMProvider):
               messages=messages,
               temperature=0.7,
           )
-          return response.choices[0].message.content or ''
+          return response.choices[0].message.content
         except Exception as e:
           print(f"Error oc_curred while sending chat request to Ollama: {e}")

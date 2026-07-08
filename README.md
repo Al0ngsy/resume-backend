@@ -2,12 +2,14 @@
 
 AI-powered resume chatbot backend for Le Quoc Anh Tran, Backend Software Engineer.
 
+Serve as Python learning project.
+
 ## Tech Stack
 
 - **Framework:** FastAPI
 - **Language:** Python 3.11+
 - **Package Manager:** uv
-- **LLM Abstraction:** OpenAI-compatible (Ollama → DeepSeek → OpenRouter)
+- **LLM Abstraction:** OpenAI-compatible (Ollama → DeepSeek → OpenRouter → etc.)
 - **Validation:** Pydantic v2 + pydantic-settings
 - **Rate Limiting:** slowapi (per-IP + per-conversation)
 - **Logging:** structlog (structured JSON)
@@ -31,10 +33,22 @@ Open [http://localhost:8000](http://localhost:8000). Health check at `/api/healt
 ## Testing
 
 ```bash
+# Run all tests
 uv run pytest
+
+# Run tests with verbose output
+uv run pytest -v
+
+# Run a specific test file
+uv run pytest tests/test_guard.py -v
+
+# Run a specific test by name
+uv run pytest -k "injection" -v
 ```
 
 ## API Endpoints
+
+```bash
 
 | Method | Path                      | Description              |
 | ------ | ------------------------- | ------------------------ |
@@ -44,26 +58,30 @@ uv run pytest
 | POST   | `/api/conversations`      | Create new conversation  |
 | GET    | `/api/conversations/{id}` | Get conversation history |
 
+```
+
 ## Architecture
 
-```
+```bash
+
 Middleware Layer
-  ├── CORS (Cloudflare Pages origin)
-  ├── Rate limiter (per IP + per conversation)
-  └── Request ID injection
+├── CORS (Cloudflare Pages origin)
+├── Rate limiter (per IP + per conversation)
+└── Request ID injection
 
 Guard Layer
-  ├── Input validation (prompt injection scan)
-  ├── Content safety (topic/policy check)
-  └── Output filtering (PII leak prevention)
+├── Input validation (prompt injection scan)
+├── Content safety (topic/policy check)
+└── Output filtering (PII leak prevention)
 
 Router Layer
-  └── FastAPI route handlers
+└── FastAPI route handlers
 
 Core Layer
-  ├── Prompt builder (data/* → system prompt)
-  ├── LLM abstraction (swappable providers)
-  └── Conversation logger (structured JSON)
+├── Prompt builder (data/\* → system prompt)
+├── LLM abstraction (swappable providers)
+└── Conversation logger (structured JSON)
+
 ```
 
 ## Environment Variables

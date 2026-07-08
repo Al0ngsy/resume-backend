@@ -34,6 +34,10 @@ class Settings(BaseSettings):
   # CORS
   corsOrigins: str = "http://localhost:3000"
 
+  # PII allowlist (comma-separated) — these emails/phones won't be redacted
+  allowedEmails: str = ""
+  allowedPhones: str = ""
+
   # Logging
   logLevel: str = "info"
 
