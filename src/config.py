@@ -41,6 +41,13 @@ class Settings(BaseSettings):
   # Logging
   logLevel: str = "info"
 
+  # Personal info (used in prompt builder — override in .env for different profiles)
+  personalName: str = "Le Quoc Anh Tran"
+  personalEmail: str = "lequocanhtr@gmail.com"
+  personalGithub: str = "https://github.com/Al0ngsy"
+  personalLinkedin: str = "https://linkedin.com/in/lequocanhtr"
+  personalTitle: str = "Backend Software Engineer"
+
   # ─── Startup validation ─────────────────────────────────────────────
   @model_validator(mode="after")
   def validate_provider_config(self):

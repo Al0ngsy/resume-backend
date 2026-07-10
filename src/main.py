@@ -4,7 +4,9 @@ import time
 from datetime import datetime
 from starlette.middleware.base import BaseHTTPMiddleware
 import uuid
-from logging_config import get_bound_logger, get_logger, setup_logging
+from rate_limiter import configureRateLimit
+from src.logging_config import get_bound_logger, getLogger, setup_logging
+from src.routes.chat import router as chat_router
 
 setup_logging()
 
@@ -41,7 +43,11 @@ async def bind_logger_middleware(request: Request, call_next):
     )
     return await call_next(request)
 
+configureRateLimit(app)
+
 startTime = time.time()
+
+app.include_router(chat_router)
 
 @app.get("/")
 async def root():
@@ -49,7 +55,7 @@ async def root():
 
 @app.get("/api/health")
 async def health():
-  get_logger('health').info("Health check arrives.")
+  getLogger('health').info("Health check arrives.")
   return {
     "status": "ok",
     "timestamp": datetime.now().isoformat(),       

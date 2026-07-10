@@ -28,7 +28,7 @@ def setup_logging() -> None:
 
 # for static context
 # '->' pre-define return types of the function
-def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
+def getLogger(name: str | None = None) -> structlog.stdlib.BoundLogger:
     """
       Get a structlog logger. Pass __name__ to get a module-scoped logger.
     """

@@ -1,7 +1,7 @@
 import re
 from collections import Counter
 
-from config import settings
+from src.config import settings
 
 # ─── Prompt Injection Detection ───────────────────────────────────────
 

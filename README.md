@@ -78,8 +78,9 @@ Router Layer
 └── FastAPI route handlers
 
 Core Layer
-├── Prompt builder (data/\* → system prompt)
+├── Prompt builder (data/* → system prompt)
 ├── LLM abstraction (swappable providers)
+├── Conversation store (in-memory → external DB)
 └── Conversation logger (structured JSON)
 
 ```
@@ -99,7 +100,21 @@ Core Layer
 
 ## Phases
 
-| Phase  | What                                                      | Hosting |
-| ------ | --------------------------------------------------------- | ------- |
-| **v1** | Dump context into prompt. LLM abstraction. Rate limiting. | Render  |
-| **v2** | RAG + vector DB + SQL persistence.                        | Oracle  |
+| Phase  | What                                                                                       | Hosting |
+| ------ | ------------------------------------------------------------------------------------------ | ------- |
+| **v1** | Dump context into prompt. LLM abstraction. Rate limiting. In-memory conversation store.    | Render  |
+| **v2** | RAG + vector DB. Replace in-memory conversation store with external DB (PostgreSQL/Redis). | Oracle  |
+
+### Conversation Store
+
+The server manages conversation history server-side, keyed by `x-conversation-id`.
+
+- **Phase 1 (current):** `src/conversation_store.py` stores conversations in an in-memory `dict`. This is ephemeral — data is lost on restart.
+- **Phase 2 (planned):** Replace `src/conversation_store.py` with a database-backed implementation (e.g. PostgreSQL via SQLAlchemy, or Redis). The public API (`create_conversation`, `get_history`, `append_messages`) stays the same, so the swap is a drop-in replacement.
+
+The client no longer sends `history` in the request body. Instead:
+
+1. The client sends `x-conversation-id` header (or omits it for a new conversation).
+2. The server retrieves the full history from the store.
+3. After generating a response, the server appends the user message + assistant response to the store.
+4. The response includes the `conversation_id` so the client can persist it for subsequent requests.

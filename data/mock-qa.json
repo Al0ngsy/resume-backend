@@ -1,0 +1,166 @@
+[
+  {
+    "question": "Can you tell me about yourself?",
+    "answer": "I'm a Backend Software Engineer with several years of experience building scalable systems — payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, NestJS, and PostgreSQL. I've spent most of my career at simpleTechs GmbH in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
+  },
+  {
+    "question": "What is your strongest programming language?",
+    "answer": "TypeScript, without a doubt. I've been using it daily for over 6 years across backend (NestJS, Node.js) and frontend (React). I'm also comfortable with Python for AI/LLM work and scripting, and SQL for database design and optimization."
+  },
+  {
+    "question": "What backend frameworks are you experienced with?",
+    "answer": "NestJS is my primary framework — I've built production systems with it. I'm also experienced with Express, Koa and Fastify for lighter services. On the Python side, I've worked with FastAPI for AI microservices. The backend of this resume service is built on Python too. I understand the tradeoffs between opinionated frameworks like NestJS (great for large teams and complex domains) and minimal ones like Express and Fastify (better for simple APIs and microservices)."
+  },
+  {
+    "question": "Do you have experience with databases?",
+    "answer": "Yes, extensively. PostgreSQL is my go-to. I've designed schemas, written complex queries, optimized performance, and built a migration framework for zero-downtime schema changes. I've also worked with pgvector for vector similarity search in AI applications and Prisma as an ORM. I'm comfortable with both raw SQL and ORMs, and I know when to use each."
+  },
+  {
+    "question": "Have you worked with cloud services?",
+    "answer": "Yes. I've used AWS S3 for file storage, Google GCP for configuring Pub/Sub, and I'm experienced with Docker and Kubernetes for containerized deployments. I've written Helm charts for managing K8s deployments. I'm also familiar with Cloudflare's platform — Workers, Pages, and D1."
+  },
+  {
+    "question": "Tell me about a challenging project you've worked on.",
+    "answer": "The AI microservice I built at simpleTechs was particularly challenging and rewarding since I was the only person with knowledge about AI and LLM integration. I had to design a RAG (Retrieval-Augmented Generation) pipeline from scratch — chunking incoming data, generating embeddings, storing them in PostgreSQL with pgvector, and building prompt chains with LangChain. The hard part was making it production-grade: handling rate limits from the LLM provider, implementing fallback strategies, optimizing token usage to keep costs down, and ensuring responses were accurate and grounded in the source documents. It taught me a lot about the practical challenges of shipping AI features."
+  },
+  {
+    "question": "Do you have experience with AI or machine learning?",
+    "answer": "Yes, I've been working with AI/LLMs professionally since 2025. I built a production AI microservice using NestJS, LangChain, and OpenAI — implementing RAG pipelines, vector search with pgvector, and prompt engineering. I also experiment with local LLMs in my free time, run ComfyUI for image generation workflows, and keep up with the fast-moving AI landscape. I understand the practical side: token optimization, cost management, prompt design, and grounding LLM responses in real data."
+  },
+  {
+    "question": "What is your experience with microservices?",
+    "answer": "I've designed, built, maintained, and deployed microservices at simpleTechs. The AI microservice I built was a standalone service communicating via REST APIs. I understand the tradeoffs when using microservices. Microservices give you independent deployability and scaling, but they add operational complexity. I'm comfortable with Docker, Kubernetes, and Helm for deploying and managing microservices."
+  },
+  {
+    "question": "How do you handle testing in your projects?",
+    "answer": "I believe in a pragmatic testing pyramid. Unit tests with Jest for business logic and utilities, integration tests for API endpoints and database interactions, and a few key E2E tests for critical user flows. I write tests alongside code and sometimes before code. I've also updated the existing legacy services at simpleTechs with test cases to ensure future changes don't break the underlying logic. I use test fixtures and factories to make tests maintainable. I don't aim for 100% coverage — I focus on testing behavior that would be painful if it broke."
+  },
+  {
+    "question": "What is your experience with CI/CD?",
+    "answer": "I've set up CI/CD pipelines with Bitbucket Pipeline — running tests and building Docker images on every PR. For deployment, I've used Helm charts with Kubernetes for rolling updates and rollbacks."
+  },
+  {
+    "question": "Where do you see yourself in your career?",
+    "answer": "I want to grow as a backend engineer with a focus on AI-integrated systems. The intersection of traditional backend engineering and LLMs is where I'm most excited. Building reliable, scalable systems that leverage AI in practical ways. In the next few years, I'd like to take on more architectural decisions, mentor junior developers, and deepen my expertise in distributed systems and AI infrastructure."
+  },
+  {
+    "question": "Can you describe your experience with payment integrations?",
+    "answer": "At simpleTechs, I integrated and maintained multiple payment providers into our B2B VOD platform: PayPal, Stripe, and in-app purchases (IAP) for mobile platforms. This involved handling webhooks, managing subscription lifecycles, dealing with refunds and chargebacks, and ensuring PCI compliance. I also built reconciliation tools to detect discrepancies between our system and the payment providers, as well as automated reconciliation processes to ensure end users have a smooth experience when using the service the B2B customers offer."
+  },
+  {
+    "question": "What is your educational background?",
+    "answer": "I studied Media Informatics at TU Berlin — a mix of computer science, human-computer interaction, and media technology. I completed my Bachelor's degree in 2022 and started a Master's program, which I didn't finish because I wanted to focus on my professional career at simpleTechs. I believe my strongest learning has been on the job, building real systems, making mistakes, and fixing them."
+  },
+  {
+    "question": "Why are you interested in this position?",
+    "answer": "I'm looking for a role where I can apply my backend engineering skills to meaningful problems, ideally with an AI component. I've spent 6 years building systems at simpleTechs and I'm ready for new challenges — different domains, different scales, different teams, different technologies I can work myself into. I'm particularly drawn to companies that value clean architecture, engineering excellence, and have a strong engineering culture."
+  },
+  {
+    "question": "How do you stay updated with new technologies?",
+    "answer": "I'm naturally curious and hands-on. I run local LLMs on my machine, experiment with ComfyUI for AI image generation, and tinker with Unreal Engine for game development. But I don't chase every new framework. I evaluate whether a technology solves a real problem before adopting it. The best way to learn, for me, is to build something with it."
+  },
+  {
+    "question": "What do you consider your biggest professional achievement?",
+    "answer": "Building the AI microservice from scratch at simpleTechs. I went from zero knowledge of LangChain and RAG to shipping a production system that processed incoming data and answered questions accurately. It required learning vector databases, embedding models, prompt engineering, and LLM cost optimization, all while keeping the system reliable and maintainable."
+  },
+  {
+    "question": "How do you approach debugging a production issue?",
+    "answer": "First, I assess the impact: How many users are affected, what's the severity. Then I gather data: logs, metrics, recent deployments, and any error traces. I use structured logging in Grafana with correlation IDs to trace a request through the system. Once I have a hypothesis, I try to reproduce it in a dev environment. After fixing, I write a post: what happened, why, how we fixed it, and what we'll do to prevent it so my colleagues can learn from it. The goal isn't blame, it's making the system more resilient."
+  },
+  {
+    "question": "Do you have experience with Docker and Kubernetes?",
+    "answer": "Yes, I've used both extensively. I containerize all my services with Docker — multi-stage builds to keep images small. For orchestration, I use Kubernetes with Helm charts for managing deployments, config maps, secrets, and ingress. I understand the operational side too — reading pod logs, debugging crash loops, and managing rolling updates."
+  },
+  {
+    "question": "What is your preferred development workflow?",
+    "answer": "I like to start with a clear understanding of the problem or requirement and a short design doc, RFC, or even a quick call if it's complex. Then I break it down into small steps that need to be achieved before starting to implement the feature. I write tests alongside code, use feature flags for risky changes, and open PRs early to gather feedback even if they're drafts. CI runs tests, linting, and type checking automatically. After merge, I monitor the deployment, check logs, and run some manual tests against the deployed service if possible to make sure everything is healthy."
+  },
+  {
+    "question": "How do you handle API versioning?",
+    "answer": "I prefer URL-based versioning (e.g., /api/v1/, /api/v2/) because it's explicit and easy to understand. For backward-compatible changes, I add new fields rather than changing existing ones. For breaking changes, I create a new version and deprecate the old one with a clear timeline. The key is communication, especially when other teams are affected by the change. Documenting what changed and giving consumers time to migrate."
+  },
+  {
+    "question": "What tools do you use for project management?",
+    "answer": "I've worked with Jira. I prefer lightweight processes — clear tickets with acceptance criteria, regular standups, and retrospectives that actually lead to improvements. The tool matters less than the team's discipline in keeping tickets updated and communicating blockers early."
+  },
+  {
+    "question": "What programming languages do you know besides TypeScript?",
+    "answer": "I do a little Python for AI/LLM work, scripting, and backend services. This particular backend service is written in Python as well. SQL and PL/pgSQL for database work. I've also dabbled in C++ through Unreal Engine game development, though I'm nowhere near proficient with C++ or Unreal Engine. I can also read Ruby, C# and other languages through my experience as a Software Developer, even if I can't claim to be able to work with them professionally without further training."
+  },
+  {
+    "question": "What's your approach to writing clean code?",
+    "answer": "I follow a few principles: name things clearly (code is read far more than written), keep functions small and single-purpose, avoid premature abstraction (duplication is cheaper than the wrong abstraction), write tests that document expected behavior, and add code comments to inform others about architectural decisions. I use TypeScript's type system to make illegal states unrepresentable. I also believe clean code is team code — consistent formatting, agreed-upon patterns, and code reviews that focus on clarity and correctness."
+  },
+  {
+    "question": "Have you worked on public APIs?",
+    "answer": "Yes. At simpleTechs, I built and maintained an XML/JSON Feed API that delivered content metadata to external partners like Samsung, Waipu and many more. I learned that public APIs need extra care. You can't just change things arbitrarily because you have external consumers who can't adapt quickly. Backward compatibility, clear deprecation policies, good documentation and communication are essential."
+  },
+  {
+    "question": "How do you handle database migrations in production?",
+    "answer": "I built a migration framework at simpleTechs specifically for this. The migration framework is designed to have minimal performance impact on a running production database. This is achieved through a careful reconciliation process between existing migrations and newly added ones. This way, only what's exactly required gets applied."
+  },
+  {
+    "question": "What would your previous colleagues say about working with you?",
+    "answer": "At first, people seem to think I'm not very approachable, but once they get to know me better, everyone says I'm friendly and reliable. When I say I'll do something, it gets done. I'm thorough in code reviews but constructive, never nitpicky. I'm calm under pressure and good at debugging production issues without panicking. I share knowledge freely. Once I figure something out, I document it or share it with relevant team members. And I don't have a big ego about my code. If someone has a better approach, I'm happy to change direction."
+  },
+  {
+    "question": "How do you keep your AI models cost-effective?",
+    "answer": "Cost optimization was a key part of building the AI microservice. I used several strategies: truncating context to only the most relevant information, using smaller or cheaper models for simple classification tasks, and monitoring token usage per request with alerts for anomalies. I also designed the system so we could swap models easily. If a cheaper model becomes good enough, we can switch with a config change."
+  },
+  {
+    "question": "What do you think makes a good software engineer?",
+    "answer": "Beyond technical skills, I think the best engineers have strong communication, take ownership of their work from design to production, and understand the business context of what they're building. They're pragmatic — they know when to ship and when to refactor. They're curious and always learning, but they don't chase hype. They review code constructively, help teammates, and make the team better."
+  },
+  {
+    "question": "How do you handle disagreements with colleagues about technical decisions?",
+    "answer": "I start by making sure I understand their perspective. Often disagreements come from different assumptions or constraints that I or they aren't aware of. I focus on the problem, not the person, and use data when possible: benchmarks, past incidents, or prototypes. I've also learned that most technical decisions are reversible, so it's often better to make a decision and learn from it than to debate indefinitely."
+  },
+  {
+    "question": "Describe a time you made a mistake in production and how you handled it.",
+    "answer": "Early in my career, I designed and built the reporting service with the limited knowledge I had at the time. While it initially worked well, it didn't scale with the growing user base of the B2B VOD products years later. This forced me to migrate the heavy core functionality from the service layer to the database. I learned that a solution which works well today may not always hold up in the future, and must be adapted as requirements evolve."
+  },
+  {
+    "question": "How do you estimate the time needed for a task?",
+    "answer": "I break the task into small, concrete steps and estimate each one. I add buffer for unknowns. The more unfamiliar the domain, the more buffer. I also distinguish between 'ideal working time' and 'calendar time', accounting for code review, CI, and other interruptions. I update estimates as I learn more, rather than sticking to an early guess."
+  },
+  {
+    "question": "What's your experience with system design and architecture?",
+    "answer": "I've designed several systems from scratch: the AI microservice, the PostgreSQL migration framework, and the B2B VOD platform's reporting and public API service. My approach: start with the requirements and constraints, sketch the high-level architecture, identify the critical paths and failure modes, then dive into the details. I think in terms of data flow, API contracts, and failure scenarios. I'm comfortable making tradeoffs between consistency, availability, and partition tolerance. I also believe good architecture is documented — diagrams, ADRs, and clear API specs."
+  },
+  {
+    "question": "What's your experience with GraphQL?",
+    "answer": "I have extensive working knowledge of GraphQL with PostGraphile in a production environment."
+  },
+  {
+    "question": "How do you handle technical debt?",
+    "answer": "I distinguish between deliberate technical debt (we chose a simpler solution to ship faster, with a plan to revisit) and accidental technical debt (the codebase degraded over time). For deliberate debt, I track it in the backlog with clear criteria for when to address it and document it clearly in the code itself. For accidental debt, I apply the simple rule: leave the code better than you found it. I also advocate for dedicated refactoring time — if we're always building features on top of a shaky foundation, the codebase rots."
+  },
+  {
+    "question": "What's your experience with real-time systems or WebSockets?",
+    "answer": "I've worked with WebSockets for real-time features like handling payment notifications and updating stock prices with their technical indicators. I understand the challenges: connection management, reconnection logic, message ordering, and scaling beyond a single server."
+  },
+  {
+    "question": "How do you approach learning a new codebase?",
+    "answer": "I start by understanding the domain — what problem does this code repository solve? Then I look at the high-level structure: how are the modules organized, what are the main entry points, what's the data model. I trace a single request or user flow end-to-end to understand how the pieces connect. I read the tests — they often document expected behavior better than comments. I take notes and update documentation where it's missing or outdated. And I ask questions to the people who built it, since they have context that no amount of code reading can replace."
+  },
+  {
+    "question": "How do you handle working under pressure or tight deadlines?",
+    "answer": "I stay calm and focus on what matters most. I triage: what must ship, what can be simplified, what can wait. I communicate early if a deadline is at risk when unforeseen issues arise. I've learned that working longer hours usually makes things worse, not better — tired engineers make more mistakes. Instead, I cut scope, simplify the solution, or negotiate the timeline. The key is being transparent with stakeholders and delivering something valuable, even if it's not everything we originally planned."
+  },
+  {
+    "question": "What's your experience with Agile or Scrum?",
+    "answer": "I've worked in Scrum teams for most of my career. Sprints, standups, retrospectives, and sprint reviews. I appreciate the structure when it's done right: clear priorities, regular feedback, and continuous improvement. I'm not dogmatic about any methodology. The goal is to deliver value consistently, not to follow a process perfectly."
+  },
+  {
+    "question": "How do you handle a situation where requirements change mid-sprint?",
+    "answer": "I assess the impact: how much work is already done, what needs to change, and whether the new requirements are genuinely more valuable. I communicate the tradeoff clearly: 'If we add this, feature Y will slip to next sprint.' Then I let the product owner or stakeholders decide. If the change is small and clearly more valuable, I'm happy to adapt. If it's large, I push for it to go into the next sprint. The key is transparency. Everyone should understand the cost of the change."
+  },
+  {
+    "question": "How do you mentor junior developers?",
+    "answer": "I believe in guided autonomy. I pair with juniors on their first few tasks to establish patterns, then gradually step back. I give them room to grow on their own and I'm always reachable to explain things and answer questions. I review their code thoroughly but focus on teaching principles, not just pointing out issues. I encourage them to ask 'why' and to understand the system, not just make changes. I share my mistakes openly — it helps them see that even senior engineers get things wrong. And I make sure they feel safe asking questions. There are no stupid questions, only unasked ones."
+  },
+  {
+    "question": "What's the most important lesson you've learned in your career?",
+    "answer": "That software engineering is primarily about people, not code. The best technical solution is worthless if the team doesn't understand it, if it doesn't solve a real user problem, or if it can't be maintained. Communication, empathy, and understanding the business context matter as much as technical skill. I've also learned that perfectionism is a trap, shipping something good today and improving it tomorrow is almost always better than trying to ship something perfect next year."
+  }
+]

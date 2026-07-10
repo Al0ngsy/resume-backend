@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from guard import (
+from src.guard import (
     check_prompt_injection,
     check_content_safety,
     check_pii_leak,
@@ -53,11 +53,11 @@ def test_empty_input():
     assert reason == ""
 
 
-@patch.dict(os.environ, {"ALLOWED_EMAILS": "anh@example.com"}, clear=False)
+@patch.dict(os.environ, {"ALLOWED_EMAILS": "my@example.com"}, clear=False)
 def test_pii_allowed_email_preserved():
-    """'contact anh@example.com' → preserved (in allowlist)"""
-    # Re-import settings so it picks up the mocked env var
-    from config import settings
+    """'contact my@example.com' → preserved (in allowlist)"""
+    # pydantic-settings caches at import time, so patch the live object directly
+    from src.config import settings
     settings.allowedEmails = "my@example.com"
 
     result = check_pii_leak("contact my@example.com or spam@evil.com")
