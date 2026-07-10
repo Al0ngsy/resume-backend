@@ -11,7 +11,11 @@ _log = getLogger(__name__)
 
 
 class OpenRouterProvider(LLMProvider):
-    """LLM provider for OpenRouter (any model, fallback)."""
+    """LLM provider for OpenRouter (any model, fallback).
+
+    Thinking/reasoning output (e.g.  tags from deepseek-r1)
+    is suppressed via OpenRouter's transforms mechanism.
+    """
 
     def __init__(self, settings: Settings):
         self._client = AsyncOpenAI(

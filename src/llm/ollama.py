@@ -11,7 +11,11 @@ _log = getLogger(__name__)
 
 
 class OllamaProvider(LLMProvider):
-    """LLM provider for Ollama (local or cloud)."""
+    """
+    LLM provider for Ollama (local or cloud).
+    Thinking/reasoning output (e.g. <think> tags from deepseek-r1)
+    is suppressed by passing appropriate extra_body options.
+    """
 
     def __init__(self, settings: Settings):
         self._client = AsyncOpenAI(

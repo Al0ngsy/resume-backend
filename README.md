@@ -9,7 +9,7 @@ Serve as Python learning project.
 - **Framework:** FastAPI
 - **Language:** Python 3.11+
 - **Package Manager:** uv
-- **LLM Abstraction:** OpenAI-compatible (Ollama → DeepSeek → OpenRouter → etc.)
+- **LLM Abstraction:** OpenAI-compatible (Ollama → OpenRouter)
 - **Validation:** Pydantic v2 + pydantic-settings
 - **Rate Limiting:** slowapi (per-IP + per-conversation)
 - **Logging:** structlog (structured JSON)
@@ -89,7 +89,7 @@ Core Layer
 
 | Variable                      | Description                                | Default                     |
 | ----------------------------- | ------------------------------------------ | --------------------------- |
-| `LLM_PROVIDER`                | LLM provider: ollama, deepseek, openrouter | `ollama`                    |
+| `LLM_PROVIDER`                | LLM provider: ollama, openrouter | `ollama`                    |
 | `OLLAMA_BASE_URL`             | Ollama API base URL                        | `http://localhost:11434/v1` |
 | `OLLAMA_MODEL`                | Ollama model name                          | `llama3.2`                  |
 | `OLLAMA_API_KEY`              | Ollama API key                             | —                           |
