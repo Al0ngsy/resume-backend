@@ -1,20 +1,23 @@
 # Python
-*.py[cod]
 __pycache__/
+*.py[cod]
 *.egg-info/
 dist/
 .venv/
+
+# Environment
 .env
 
-# Editor
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Project
-data/          # Personal data — don't commit
-Specification.md
-LEARNING_TODOS.md
+# Info
+Specification/
+data/mock-qa.json

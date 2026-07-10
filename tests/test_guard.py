@@ -58,7 +58,7 @@ def test_pii_allowed_email_preserved():
     """'contact my@example.com' → preserved (in allowlist)"""
     # pydantic-settings caches at import time, so patch the live object directly
     from src.config import settings
-    settings.allowedEmails = "my@example.com"
+    settings.allowed_emails = "my@example.com"
 
     result = check_pii_leak("contact my@example.com or spam@evil.com")
     assert "my@example.com" in result

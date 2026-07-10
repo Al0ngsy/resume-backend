@@ -10,15 +10,15 @@ from src.logging_config import getLogger
 _log = getLogger(__name__)
 
 
-class OllamaProvider(LLMProvider):
-    """LLM provider for Ollama (local or cloud)."""
+class DeepSeekProvider(LLMProvider):
+    """LLM provider for DeepSeek API (cheap production)."""
 
     def __init__(self, settings: Settings):
         self._client = AsyncOpenAI(
-            api_key=settings.ollama_api_key or "ollama",
-            base_url=settings.ollama_base_url,
+            base_url=settings.deepseek_base_url,
+            api_key=settings.deepseek_api_key,
         )
-        self._model = settings.ollama_model
+        self._model = settings.deepseek_model
 
     def model_name(self) -> str:
         return self._model
@@ -43,9 +43,9 @@ class OllamaProvider(LLMProvider):
             return response.choices[0].message.content
         except Exception as e:
             _log.error(
-                "ollama_call_failed",
+                "deepseek_call_failed",
                 model=self._model,
                 error_type=type(e).__name__,
                 error_message=str(e),
             )
-            raise RuntimeError(f"Ollama call failed: {e}") from e
+            raise RuntimeError(f"DeepSeek call failed: {e}") from e

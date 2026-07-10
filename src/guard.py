@@ -7,7 +7,7 @@ from src.config import settings
 
 # Pre-compile regex patterns (faster than re.search() with a string each time)
 _INJECTION_PATTERNS = [
-    re.compile(r"ignore\s+(your|all|previous)\s+instructions?", re.IGNORECASE),
+    re.compile(r"ignore\s+(your\s+)?(all\s+)?(previous\s+)?instructions?", re.IGNORECASE),
     re.compile(r"you\s+are\s+(now\s+)?(DAN|a\s+new|no\s+longer)", re.IGNORECASE),
     re.compile(r"system\s*prompt", re.IGNORECASE),
     re.compile(r"pretend\s+you\s+are", re.IGNORECASE),
@@ -87,8 +87,8 @@ def check_content_safety(text: str) -> tuple[bool, str]:
 
 def _build_allowlist() -> tuple[set[str], set[str]]:
     """Parse comma-separated allowed emails/phones from settings."""
-    emails = {e.strip() for e in settings.allowedEmails.split(",") if e.strip()}
-    phones = {p.strip() for p in settings.allowedPhones.split(",") if p.strip()}
+    emails = {e.strip() for e in settings.allowed_emails.split(",") if e.strip()}
+    phones = {p.strip() for p in settings.allowed_phones.split(",") if p.strip()}
     return emails, phones
 
 

@@ -10,15 +10,19 @@ from src.logging_config import getLogger
 _log = getLogger(__name__)
 
 
-class OllamaProvider(LLMProvider):
-    """LLM provider for Ollama (local or cloud)."""
+class OpenRouterProvider(LLMProvider):
+    """LLM provider for OpenRouter (any model, fallback)."""
 
     def __init__(self, settings: Settings):
         self._client = AsyncOpenAI(
-            api_key=settings.ollama_api_key or "ollama",
-            base_url=settings.ollama_base_url,
+            base_url=settings.openrouter_base_url,
+            api_key=settings.openrouter_api_key,
+            default_headers={
+                "HTTP-Referer": "https://github.com/Al0ngsy/resume-backend",
+                "X-Title": "Resume Chatbot",
+            },
         )
-        self._model = settings.ollama_model
+        self._model = settings.openrouter_model
 
     def model_name(self) -> str:
         return self._model
@@ -43,9 +47,9 @@ class OllamaProvider(LLMProvider):
             return response.choices[0].message.content
         except Exception as e:
             _log.error(
-                "ollama_call_failed",
+                "openrouter_call_failed",
                 model=self._model,
                 error_type=type(e).__name__,
                 error_message=str(e),
             )
-            raise RuntimeError(f"Ollama call failed: {e}") from e
+            raise RuntimeError(f"OpenRouter call failed: {e}") from e

@@ -1,11 +1,21 @@
 import structlog
 import logging
+import sys
 
 def setup_logging() -> None:
   """
     Configure structlog to output JSON to stdout.
     To be called ONCE at app startup to configure structlog.
   """
+  # Set the stdlib root logger level so structlog's filter_by_level
+  # actually lets INFO (and above) through. Without this, the default
+  # WARNING level silently drops all our info() calls.
+  logging.basicConfig(
+      format="%(message)s",
+      level=logging.INFO,
+      stream=sys.stdout,
+  )
+
   structlog.configure( 
     processors=[
       # chain of transformation top-down:

@@ -17,7 +17,7 @@ Backend Software Engineer with multiple years of experience designing and buildi
 
 ### Software Engineer — simpleTechs GmbH, Nuremberg
 
-_July 2024 – August 2026_
+_July 2024 until August 2026_
 
 - Built and maintained an AI-powered microservice using **NestJS**, **LangChain**, and **OpenAI** for intelligent document processing and retrieval-augmented generation (RAG)
 - Designed vector search pipelines with **PostgreSQL** + **pgvector** for semantic similarity search
@@ -26,7 +26,7 @@ _July 2024 – August 2026_
 
 ### Working Student — simpleTechs GmbH, Nuremberg
 
-_September 2019 – June 2024_
+_September 2019 until June 2024_
 
 - Developed and maintained a **B2B SaaS VOD platform** serving enterprise clients
 - Integrated payment systems including **PayPal**, **Stripe**, and **in-app purchases (IAP)** for mobile platforms
@@ -56,7 +56,7 @@ _September 2019 – June 2024_
 
 ### AI Microservice (NestJS + LangChain + RAG)
 
-_2025–2026_
+_2025 until 2026_
 
 - Built a production-grade AI microservice integrating LLMs with company knowledge bases
 - Implemented RAG (Retrieval-Augmented Generation) using PostgreSQL + pgvector for semantic search
@@ -64,21 +64,21 @@ _2025–2026_
 
 ### PostgreSQL Migration Framework
 
-_2025-2026_
+_2025 until 2026_
 
 - Developed a structured migration framework for zero-downtime PostgreSQL schema changes
 - Automated rollback procedures and migration validation
 
 ### B2B SaaS VOD Platform
 
-_2019–2026_
+_2019 until 2026_
 
 - Full-stack video-on-demand platform serving enterprise B2B clients
 - Payment integrations (PayPal, Stripe, IAP), content management, and partner feed APIs
 
 ### Options Trading Prototype (Alpaca API)
 
-_2023-2024_
+_2023 until 2024_
 
 - Built a real-time options trading prototype using the Alpaca Markets API
 - Implemented order management, position tracking, and market data streaming
@@ -89,11 +89,11 @@ _2023-2024_
 
 ### M.Sc. Media Informatics — TU Berlin
 
-_2022 – 2024 (incomplete)_
+_2022 until 2024 (incomplete)_
 
 ### B.Sc. Medieninformatik — TU Berlin
 
-_2016 – 2022_
+_2016 until 2022_
 
 - Bachelor of Science in Media Informatics
 
@@ -112,4 +112,3 @@ _2016 – 2022_
 - Local LLMs and AI experimentation
 - ComfyUI — AI image generation workflows
 - Unreal Engine game development (C++ / Blueprints)
-- Open-source contributions

@@ -6,58 +6,58 @@ class Settings(BaseSettings):
   model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
   # tries these variants in order when looking for a env-var match 
-  # - The exact field name: `llmProvider`
-  # - Uppercase version: `LLMPROVIDER`
+  # - The exact field name: `llm_provider`
+  # - Uppercase version: `llm_provider`
   # - Snake_case uppercase: `LLM_PROVIDER`
   # first matching variant is used, if none match, the default value is used
-  llmProvider: str = "ollama"
+  llm_provider: str = "ollama"
 
   # Ollama settings
-  ollamaBaseUrl: str = "http://localhost:11434/v1"
-  ollamaApiKey: str = "" # local models does not require an API key, only if using Ollama Cloud
-  ollamaModel: str = "ornith:latest" 
+  ollama_base_url: str = "http://localhost:11434/v1"
+  ollama_api_key: str = "" # local models does not require an API key, only if using Ollama Cloud
+  ollama_model: str = "ornith:latest" 
 
   # DeepSeek settings -- fallback on ollama
-  deepseekApiKey: str = ""
-  deepseekBaseUrl: str = "https://api.deepseek.com/v1"
-  deepseekModel: str = ""
+  deepseek_api_key: str = ""
+  deepseek_base_url: str = "https://api.deepseek.com/v1"
+  deepseek_model: str = ""
 
   # OpenRouter settings -- fallback on ollama
-  openRouterApiKey: str = ""
-  openRouterBaseUrl: str = "https://openrouter.ai/api/v1"
-  openRouterModel: str = ""
+  openrouter_api_key: str = ""
+  openrouter_base_url: str = "https://openrouter.ai/api/v1"
+  openrouter_model: str = ""
 
   # Rate limiting
-  rateLimitPerIp: str = "3/minute" # 3 requests per minute per IP address
-  rateLimitPerConversation: str = "12/day" # 12 request per conversation per day, afterwards the recruiter is prompted to contact directy instead
+  rate_limit_per_ip: str = "3/minute" # 3 requests per minute per IP address
+  rate_limit_per_conversation: str = "12/day" # 12 request per conversation per day, afterwards the recruiter is prompted to contact directy instead
 
   # CORS
-  corsOrigins: str = "http://localhost:3000"
+  cors_origins: str = "http://localhost:3000"
 
   # PII allowlist (comma-separated) — these emails/phones won't be redacted
-  allowedEmails: str = ""
-  allowedPhones: str = ""
+  allowed_emails: str = ""
+  allowed_phones: str = ""
 
   # Logging
-  logLevel: str = "info"
+  log_level: str = "info"
 
   # Personal info (used in prompt builder — override in .env for different profiles)
-  personalName: str = "Le Quoc Anh Tran"
-  personalEmail: str = "lequocanhtr@gmail.com"
-  personalGithub: str = "https://github.com/Al0ngsy"
-  personalLinkedin: str = "https://linkedin.com/in/lequocanhtr"
-  personalTitle: str = "Backend Software Engineer"
+  personal_name: str = ""
+  personal_email: str = ""
+  personal_github: str = ""
+  personal_linkedin: str = ""
+  personal_title: str = ""
 
   # ─── Startup validation ─────────────────────────────────────────────
   @model_validator(mode="after")
   def validate_provider_config(self):
-    if self.llmProvider == "deepseek" and not self.deepseekApiKey:
+    if self.llm_provider == "deepseek" and not self.deepseek_api_key:
       raise ValueError(
         "DEEPSEEK_API_KEY is required when LLM_PROVIDER=deepseek.\n"
         "  Either set DEEPSEEK_API_KEY in your .env file,\n"
         "  or change LLM_PROVIDER to 'ollama'."
       )
-    if self.llmProvider == "openrouter" and not self.openRouterApiKey:
+    if self.llm_provider == "openrouter" and not self.openrouter_api_key:
       raise ValueError(
         "OPENROUTER_API_KEY is required when LLM_PROVIDER=openrouter.\n"
         "  Either set OPENROUTER_API_KEY in your .env file,\n"
