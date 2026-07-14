@@ -19,7 +19,7 @@ def test_prompt_contains_qa():
 def test_prompt_has_safety_preamble():
     """Prompt starts with safety instructions."""
     prompt = build_system_prompt()
-    assert "You are an AI assistant representing" in prompt
+    assert "You are an AI assistant that represents" in prompt
     assert "Guidelines:" in prompt
 
 
