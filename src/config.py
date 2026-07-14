@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     # CORS
     cors_origins: str = "http://localhost:3000"
 
+    # API key for frontend authentication (shared secret)
+    # If empty, auth is disabled (local dev only)
+    api_key: str = ""
+
     # PII allowlist (comma-separated) — these emails/phones won't be redacted
     allowed_emails: str = ""
     allowed_phones: str = ""

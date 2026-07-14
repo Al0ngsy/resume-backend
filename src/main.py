@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
-import socket
 from starlette.middleware.base import BaseHTTPMiddleware
+import socket
 import uuid
 
 from src.config import settings
@@ -62,6 +63,20 @@ app.add_middleware(
     allow_headers=["Content-Type", "X-Conversation-ID", "X-Request-ID", "X-Client-ID"],
 )
 app.add_middleware(RequestIDMiddleware)
+
+
+# ─── API key authentication ──────────────────────────────────────────
+# If API_KEY is set, all /api/* endpoints (except /api/health) require
+# the frontend to send `X-API-Key: <key>`.
+_HEALTH_PATH = "/api/health"
+
+
+@app.middleware("http")
+async def api_key_auth(request: Request, call_next):
+    if settings.api_key and request.url.path.startswith("/api/") and request.url.path != _HEALTH_PATH:
+        if request.headers.get("X-API-Key") != settings.api_key:
+            return JSONResponse(status_code=401, content={"detail": "Invalid or missing API key"})
+    return await call_next(request)
 
 
 @app.middleware("http")

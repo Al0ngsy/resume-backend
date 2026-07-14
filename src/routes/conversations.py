@@ -1,17 +1,19 @@
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 
 import src.conversation_store as store
 from src.conversation_store import create_conversation, get_history
 from src.logging_config import getLogger
+from src.rate_limiter import limiterIp
 
 router = APIRouter(prefix="/api", tags=["conversations"])
 _log = getLogger(__name__)
 
 
 @router.post("/conversations")
-async def new_conversation():
+@limiterIp.limit("10/hour")
+async def new_conversation(request: Request):
     conv_id = create_conversation()
     _log.info("conversation_created", conversation_id=conv_id)
     return {

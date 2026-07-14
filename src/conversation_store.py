@@ -18,11 +18,20 @@ _store: dict[str, list[ChatCompletionMessageParam]] = {}
 # Thread-safe operations (FastAPI is async, but guard against concurrent access)
 _lock = threading.Lock()
 
+# Max conversations before oldest are evicted (prevents memory exhaustion)
+_MAX_CONVERSATIONS = 500
+
 
 def create_conversation() -> str:
     """Create a new empty conversation and return its ID."""
     conv_id = str(uuid.uuid4())
     with _lock:
+        # Evict oldest conversations if at capacity
+        if len(_store) >= _MAX_CONVERSATIONS:
+            # Remove ~10% of oldest entries (arbitrary but simple)
+            to_remove = len(_store) - _MAX_CONVERSATIONS + 1
+            for key in list(_store.keys())[:to_remove]:
+                del _store[key]
         _store[conv_id] = []
     return conv_id
 
