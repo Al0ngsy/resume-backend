@@ -5,6 +5,7 @@ import socket
 from starlette.middleware.base import BaseHTTPMiddleware
 import uuid
 
+from src.config import settings
 from src.rate_limiter import configureRateLimit
 from src.logging_config import get_bound_logger, getLogger, setup_logging
 from src.routes.chat import router as chat_router
@@ -54,8 +55,11 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: Change this to the frontend URL in production
-    allow_methods=["GET", "POST"],
+    allow_origins=[
+        origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()
+    ],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "X-Conversation-ID", "X-Request-ID", "X-Client-ID"],
 )
 app.add_middleware(RequestIDMiddleware)
 
