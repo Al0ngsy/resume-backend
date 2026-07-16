@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from collections.abc import AsyncGenerator, Sequence
 
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam
@@ -57,3 +57,34 @@ class OpenRouterProvider(LLMProvider):
                 error_message=str(e),
             )
             raise RuntimeError(f"OpenRouter call failed: {e}") from e
+
+    async def chat_stream(
+        self,
+        systemPrompt: str,
+        conversation: Sequence[ChatCompletionMessageParam],
+        userMessage: str,
+    ) -> AsyncGenerator[str, None]:
+        try:
+            messages: list[ChatCompletionMessageParam] = [
+                {"role": "system", "content": systemPrompt},
+                *conversation,
+                {"role": "user", "content": userMessage},
+            ]
+            stream = await self._client.chat.completions.create(
+                model=self._model,
+                messages=messages,
+                temperature=0.7,
+                stream=True,
+            )
+            async for chunk in stream:
+                delta = chunk.choices[0].delta.content
+                if delta:
+                    yield delta
+        except Exception as e:
+            _log.error(
+                "openrouter_stream_failed",
+                model=self._model,
+                error_type=type(e).__name__,
+                error_message=str(e),
+            )
+            raise RuntimeError(f"OpenRouter stream failed: {e}") from e
