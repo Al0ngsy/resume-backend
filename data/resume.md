@@ -40,7 +40,7 @@ _September 2019 until June 2024_
 
 | Category      | Technologies                                        |
 | ------------- | --------------------------------------------------- |
-| **Languages** | TypeScript, JavaScript, Python, SQL                 |
+| **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL               |
 | **Backend**   | Node.js, NestJS, Express, REST APIs, GraphQL        |
 | **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis             |
 | **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search |
@@ -49,6 +49,7 @@ _September 2019 until June 2024_
 | **Frontend**  | React, HTML/CSS                                     |
 | **Testing**   | Jest, unit/integration/e2e testing                  |
 | **Tools**     | Git, GitHub Actions, VS Code, WebStorm              |
+| **Learning**  | Python, C#                                          |
 
 ---
 

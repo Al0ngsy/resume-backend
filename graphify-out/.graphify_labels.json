@@ -1,0 +1,22 @@
+{
+  "0": "Config & LLM Provider Abstraction",
+  "1": "Conversation Store & Models",
+  "2": "Resume Content & Architecture Docs",
+  "3": "Guard Layer (Safety & PII)",
+  "4": "App Setup & Middleware",
+  "5": "System Prompt Builder",
+  "6": "Candidate Profile & Tech Stack",
+  "7": "Chat Endpoint Integration Tests",
+  "8": "Test Fixtures (conftest)",
+  "9": "Health Endpoint Tests",
+  "10": "LLM Chat Interface",
+  "13": "Project Package Root",
+  "14": "Chat API Endpoint",
+  "15": "Conversations API Endpoints",
+  "16": "Health API Endpoint",
+  "17": "Guard Layer Module",
+  "18": "Router Layer Module",
+  "19": "LLM Package Init",
+  "20": "Config Package Init",
+  "21": "Src Package Init"
+}

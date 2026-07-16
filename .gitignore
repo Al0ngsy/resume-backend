@@ -21,3 +21,10 @@ Thumbs.db
 # Info
 Specification/
 data/mock-qa.json
+
+# Graphify — keep human-readable reports, ignore regenerable artifacts
+graphify-out/manifest.json
+graphify-out/graph.json
+graphify-out/cost.json
+graphify-out/cache/
+graphify-out/20*/
