@@ -9,9 +9,14 @@ async def client():
     """An async HTTP client that talks to the app directly (no network).
 
     Auth is disabled during tests by clearing the API key.
+    Rate limiter state is reset between tests to avoid cross-test interference.
     """
+    from src.rate_limiter import limiterIp, limiterConv
+
     original_key = settings.api_key
     settings.api_key = ""
+    limiterIp.reset()
+    limiterConv.reset()
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         yield client

@@ -38,18 +38,18 @@ _September 2019 until June 2024_
 
 ## Technical Skills
 
-| Category      | Technologies                                        |
-| ------------- | --------------------------------------------------- |
-| **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL               |
-| **Backend**   | Node.js, NestJS, Express, REST APIs, GraphQL        |
-| **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis             |
-| **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search |
-| **DevOps**    | Docker, Kubernetes, Helm, CI/CD pipelines           |
-| **Cloud**     | AWS S3, Google Pub/Sub                              |
-| **Frontend**  | React, HTML/CSS                                     |
-| **Testing**   | Jest, unit/integration/e2e testing                  |
-| **Tools**     | Git, GitHub Actions, VS Code, WebStorm              |
-| **Learning**  | Python, C#                                          |
+| Category      | Technologies                                          |
+| ------------- | ----------------------------------------------------- |
+| **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL                 |
+| **Backend**   | Node.js, NestJS, Express, REST APIs, GraphQL, FastAPI |
+| **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis               |
+| **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search   |
+| **DevOps**    | Docker, Kubernetes, Helm, CI/CD pipelines             |
+| **Cloud**     | AWS S3, Google Pub/Sub                                |
+| **Frontend**  | React, HTML/CSS                                       |
+| **Testing**   | Jest, unit/integration/e2e testing                    |
+| **Tools**     | Git, GitHub Actions, VS Code, WebStorm                |
+| **Learning**  | Python, C#                                            |
 
 ---
 

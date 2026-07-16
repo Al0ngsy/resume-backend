@@ -23,12 +23,13 @@ def configureRateLimit(app: FastAPI) -> None:
     app.state.limiterConv = limiterConv
 
     @app.exception_handler(RateLimitExceeded)
-    async def _rateLimitHandler(exc: RateLimitExceeded) -> JSONResponse:
+    async def _rateLimitHandler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
         return JSONResponse(
             status_code=429,
             content={
                 "error": "Rate limit exceeded",
-                "message": str(exc),
-            }
+                "message": "I've reached the message limit for this session. Please reach out directly via LinkedIn or email to continue the conversation.",
+            },
+            headers={"Retry-After": "300"},
         )
     
