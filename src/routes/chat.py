@@ -36,7 +36,7 @@ async def chat(request: Request, body: ChatRequest):
     if not passed:
         logger.info("guard_check_blocked", check_type="prompt_injection", reason=reason)
         return ChatResponse(
-            response="I'm sorry, but I can't process that request. Please ask a question about Le Quoc Anh Tran's professional background.",
+            response=f"I'm sorry, but I can't process that request. Please ask a question about {settings.personal_name}'s professional background.",
             conversation_id=conversation_id,
         )
 
@@ -45,7 +45,7 @@ async def chat(request: Request, body: ChatRequest):
     if not passed:
         logger.info("guard_check_blocked", check_type="content_safety", reason=reason)
         return ChatResponse(
-            response="I'm here to answer questions about Le Quoc Anh Tran's professional experience. Please ask something related to his background, skills, or projects.",
+            response=f"I'm here to answer questions about {settings.personal_name}'s professional experience. Please ask something related to his background, skills, or projects.",
             conversation_id=conversation_id,
         )
 
@@ -186,7 +186,7 @@ async def chat_stream(request: Request, body: ChatRequest):
             logger.info("guard_check_blocked", check_type="prompt_injection", reason=reason)
             msg = (
                 "I'm sorry, but I can't process that request. "
-                "Please ask a question about Le Quoc Anh Tran's professional background."
+                f"Please ask a question about {settings.personal_name}'s professional background."
             )
             yield _sse_step("checking_safety", "Question blocked", "done")
             yield _sse_event("blocked", msg)
@@ -196,7 +196,7 @@ async def chat_stream(request: Request, body: ChatRequest):
         if not passed:
             logger.info("guard_check_blocked", check_type="content_safety", reason=reason)
             msg = (
-                "I'm here to answer questions about Le Quoc Anh Tran's professional experience. "
+                f"I'm here to answer questions about {settings.personal_name}'s professional experience. "
                 "Please ask something related to his background, skills, or projects."
             )
             yield _sse_step("checking_safety", "Question blocked", "done")

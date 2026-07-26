@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 import fitz  # PyMuPDF
-from sqlalchemy import delete, select
+from sqlalchemy import delete, text
 
 from src.rag.chunker import chunk_qa_pairs, chunk_text
 from src.db.database import _ensure_engine
@@ -43,7 +43,7 @@ def _extract_pdf_text(pdf_path: Path) -> str:
     doc = fitz.open(str(pdf_path))
     try:
         for page in doc:
-            text_parts.append(page.get_text())
+            text_parts.append(str(page.get_text()))
     finally:
         doc.close()
     return "".join(text_parts)
@@ -213,15 +213,53 @@ async def reindex_source(source: str) -> int:
     return len(documents)
 
 
-async def search_similar(query_embedding: list[float], top_k: int = 5) -> list[Document]:
-    """Return the top-k most similar Document rows by cosine distance."""
+async def search_similar(
+    query_embedding: list[float],
+    top_k: int = 5,
+    max_distance: float = 0.5,
+) -> list[Document]:
+    """Return the top-k most similar Document rows by cosine distance.
+
+    Only chunks with cosine distance < max_distance are returned. This
+    filters out low-relevance chunks that would inject noise and cause
+    the LLM to hallucinate (e.g., a distant chunk mentioning "frontend"
+    triggering Angular/Vue associations). With pgvector cosine_distance,
+    distance ranges from 0 (identical) to 2 (opposite); 0.5 is a common
+    practical threshold for relevance with 1024-dim Jina embeddings.
+    """
     _ensure_engine()
     from src.db.database import AsyncSessionLocal
     async with AsyncSessionLocal() as session:  # type: ignore[misc]
-        stmt = (
-            select(Document)
-            .order_by(Document.embedding.cosine_distance(query_embedding))
-            .limit(top_k)
+        # Use a raw query to filter by distance in SQL — pgvector computes
+        # cosine_distance natively and we avoid fetching irrelevant rows.
+        # The :embedding param is cast to the vector type by SQLAlchemy.
+        stmt = text("""
+            SELECT id, source, chunk_index, content, metadata,
+                   embedding,
+                   embedding <=> CAST(:embedding AS vector) AS distance
+            FROM documents
+            WHERE (embedding <=> CAST(:embedding AS vector)) < :max_distance
+            ORDER BY distance
+            LIMIT :top_k
+        """).bindparams(
+            embedding=str(query_embedding),
+            max_distance=max_distance,
+            top_k=top_k,
         )
         result = await session.execute(stmt)
-        return list(result.scalars().all())
+        rows = result.fetchall()
+
+    # Reconstruct Document objects from raw rows
+    documents = []
+    for row in rows:
+        documents.append(
+            Document(
+                id=row[0],
+                source=row[1],
+                chunk_index=row[2],
+                content=row[3],
+                metadata_=row[4],
+                embedding=row[5],
+            )
+        )
+    return documents

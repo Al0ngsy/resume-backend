@@ -42,7 +42,7 @@ class OllamaProvider(LLMProvider):
             response = await self._client.chat.completions.create(
                 model=self._model,
                 messages=messages,
-                temperature=0.7,
+                temperature=0.35,
             )
             return response.choices[0].message.content
         except Exception as e:
@@ -69,7 +69,7 @@ class OllamaProvider(LLMProvider):
             stream = await self._client.chat.completions.create(
                 model=self._model,
                 messages=messages,
-                temperature=0.7,
+                temperature=0.35,
                 stream=True,
             )
             async for chunk in stream:

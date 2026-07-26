@@ -2,9 +2,10 @@ from src.prompt import build_system_prompt, count_tokens_approx
 
 
 def test_prompt_contains_resume():
-    """Prompt includes text from resume.md."""
+    """Prompt includes the configured personal name and title."""
     prompt = build_system_prompt()
-    assert "Le Quoc Anh Tran" in prompt
+    from src.config import settings
+    assert settings.personal_name in prompt
     assert "Backend Software Engineer" in prompt
 
 
