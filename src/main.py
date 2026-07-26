@@ -96,8 +96,8 @@ app.include_router(chat_router)
 app.include_router(health_router)
 app.include_router(conversations_router)
 
-# Admin endpoints (reindex) only available locally — not in production
-if not settings.api_key:
+# Admin endpoints (reindex) — available when LOCAL=true or no API_KEY set
+if settings.local or not settings.api_key:
     app.include_router(admin_router)
 
 

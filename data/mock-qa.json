@@ -162,5 +162,9 @@
   {
     "question": "What's the most important lesson you've learned in your career?",
     "answer": "That software engineering is primarily about people, not code. The best technical solution is worthless if the team doesn't understand it, if it doesn't solve a real user problem, or if it can't be maintained. Communication, empathy, and understanding the business context matter as much as technical skill. I've also learned that perfectionism is a trap, shipping something good today and improving it tomorrow is almost always better than trying to ship something perfect next year."
+  },
+  {
+    "question": "Do you have experience with frontend development?",
+    "answer": "Yes. The CMS I develop and maintain at simpleTechs is built on React-Admin (https://marmelab.com/react-admin/), a frontend framework for building admin interfaces on top of REST/GraphQL APIs. Beyond that, I use React and Next.js for my own projects, including this portfolio site. I'm comfortable across the stack but my professional focus is backend."
   }
 ]

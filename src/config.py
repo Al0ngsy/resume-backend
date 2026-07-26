@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     # CORS
     cors_origins: str = "http://localhost:3000"
 
+    # Local dev flag — enables admin endpoints regardless of API_KEY
+    local: bool = False
+
     # API key for frontend authentication (shared secret)
     # If empty, auth is disabled (local dev only)
     api_key: str = ""
