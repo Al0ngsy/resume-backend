@@ -9,11 +9,16 @@ def test_prompt_contains_resume():
 
 
 def test_prompt_contains_qa():
-    """Prompt includes Q&A pairs."""
+    """Without rag_context the prompt has no Q&A section; with it, context is appended."""
     prompt = build_system_prompt()
-    assert "Common Q&A" in prompt
-    assert "Q:" in prompt
-    assert "A:" in prompt
+    # No file-read Q&A anymore — that comes via rag_context
+    assert "Common Q&A" not in prompt
+
+    rag_prompt = build_system_prompt(
+        "Q: What frameworks do you use?\nA: NestJS and TypeScript.\n"
+    )
+    assert "Relevant Background Information" in rag_prompt
+    assert "NestJS and TypeScript" in rag_prompt
 
 
 def test_prompt_has_safety_preamble():

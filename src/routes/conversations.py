@@ -2,8 +2,7 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException, Request
 
-import src.conversation_store as store
-from src.conversation_store import create_conversation, get_history
+from src.db.store import create_conversation, get_history, conversation_exists
 from src.logging_config import getLogger
 from src.rate_limiter import limiterIp
 
@@ -14,7 +13,7 @@ _log = getLogger(__name__)
 @router.post("/conversations")
 @limiterIp.limit("10/hour")
 async def new_conversation(request: Request):
-    conv_id = create_conversation()
+    conv_id = await create_conversation()
     _log.info("conversation_created", conversation_id=conv_id)
     return {
         "conversation_id": conv_id,
@@ -24,8 +23,8 @@ async def new_conversation(request: Request):
 
 @router.get("/conversations/{conversation_id}")
 async def get_conversation(conversation_id: str):
-    messages = get_history(conversation_id)
-    if not messages and conversation_id not in _get_store_ids():
+    messages = await get_history(conversation_id)
+    if not messages and not await conversation_exists(conversation_id):
         _log.info("conversation_not_found", conversation_id=conversation_id)
         raise HTTPException(status_code=404, detail="Conversation not found")
 
@@ -42,8 +41,3 @@ async def get_conversation(conversation_id: str):
             for m in messages
         ],
     }
-
-
-def _get_store_ids() -> set[str]:
-    """Return the set of known conversation IDs (for 404 detection)."""
-    return set(store._store.keys())

@@ -41,6 +41,16 @@ class Settings(BaseSettings):
     # Logging
     log_level: str = "info"
 
+    # Database (async PostgreSQL — e.g. postgresql+asyncpg://user:pass@host:5432/dbname)
+    database_url: str = ""
+
+    # Embedding settings (Jina AI — 10M free tokens, no credit card)
+    # API is OpenAI-compatible at https://api.jina.ai/v1
+    embedding_api_key: str = ""
+    embedding_base_url: str = "https://api.jina.ai/v1"
+    embedding_model: str = "jina-embeddings-v3"
+    embedding_dimensions: int = 1024
+
     # Personal info (used in prompt builder — override in .env for different profiles)
     personal_name: str = ""
     personal_email: str = ""

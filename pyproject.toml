@@ -4,11 +4,16 @@ version = "0.1.0"
 description = "AI-powered resume chatbot backend"
 requires-python = ">=3.11"
 dependencies = [
+    "alembic>=1.18.5",
+    "asyncpg>=0.31.0",
     "fastapi>=0.139.0",
     "openai>=2.44.0",
+    "pgvector>=0.5.0",
     "pydantic-settings>=2.14.2",
+    "pymupdf>=1.28.0",
     "python-dotenv>=1.2.2",
     "slowapi>=0.1.10",
+    "sqlalchemy[asyncio]>=2.0.51",
     "structlog>=26.1.0",
     "tiktoken>=0.7.0",
     "uvicorn[standard]>=0.50.2",

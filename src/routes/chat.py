@@ -8,7 +8,7 @@ from src.config import settings
 from src.llm import get_llm_provider
 from src.guard import check_prompt_injection, check_content_safety, check_pii_leak
 from src.rate_limiter import limiterIp, limiterConv
-from src.conversation_store import create_conversation, get_history, append_messages
+from src.db.store import create_conversation, get_history, append_messages
 from src.prompt import build_system_prompt, count_tokens_approx
 from src.models import ChatRequest, ChatResponse
 
@@ -23,7 +23,7 @@ async def chat(request: Request, body: ChatRequest):
     logger: structlog.stdlib.BoundLogger = request.state.logger
 
     # Resolve conversation ID — create one if the client didn't provide it
-    conversation_id = request.headers.get("x-conversation-id") or create_conversation()
+    conversation_id = request.headers.get("x-conversation-id") or await create_conversation()
 
     # Re-bind logger with the resolved conversation_id so all subsequent
     # log lines in this request carry the correct ID.
@@ -52,7 +52,7 @@ async def chat(request: Request, body: ChatRequest):
     logger.info("guard_check_passed")
 
     # 3. Retrieve conversation history from server-side store
-    conversation = get_history(conversation_id)
+    conversation = await get_history(conversation_id)
 
     # 4. Build system prompt from data files and send to LLM
     system_prompt = build_system_prompt()
@@ -111,7 +111,7 @@ async def chat(request: Request, body: ChatRequest):
     )
 
     # 5. Persist the exchange to the store
-    append_messages(conversation_id, [
+    await append_messages(conversation_id, [
         {"role": "user", "content": body.message},
         {"role": "assistant", "content": response_text},
     ])
@@ -146,6 +146,18 @@ def _sse_event(event: str, data: str) -> str:
     return f"event: {event}\n{payload}\n\n"
 
 
+def _sse_step(step_id: str, label: str, status: str) -> str:
+    """Format a `step` SSE event describing pipeline progress.
+
+    The client can render a progress indicator from these step events.
+    `status` is typically "running" (step started) or "done" (step finished).
+    """
+    import json
+
+    data = json.dumps({"step": step_id, "label": label, "status": status})
+    return _sse_event("step", data)
+
+
 @router.post("/chat/stream")
 @limiterIp.limit(settings.rate_limit_per_ip)
 @limiterConv.limit(settings.rate_limit_per_conversation)
@@ -161,12 +173,14 @@ async def chat_stream(request: Request, body: ChatRequest):
     start_time = time.time()
     logger: structlog.stdlib.BoundLogger = request.state.logger
 
-    conversation_id = request.headers.get("x-conversation-id") or create_conversation()
+    conversation_id = request.headers.get("x-conversation-id") or await create_conversation()
     logger = logger.bind(conversationId=conversation_id)
     logger.info("request_received", message_length=len(body.message), streaming=True)
 
     async def event_generator():
-        # 1. Guard: prompt injection check
+        # 1. Guard: prompt injection + content safety
+        yield _sse_step("checking_safety", "Checking question safety...", "running")
+
         passed, reason = check_prompt_injection(body.message)
         if not passed:
             logger.info("guard_check_blocked", check_type="prompt_injection", reason=reason)
@@ -174,10 +188,10 @@ async def chat_stream(request: Request, body: ChatRequest):
                 "I'm sorry, but I can't process that request. "
                 "Please ask a question about Le Quoc Anh Tran's professional background."
             )
+            yield _sse_step("checking_safety", "Question blocked", "done")
             yield _sse_event("blocked", msg)
             return
 
-        # 2. Guard: content safety
         passed, reason = check_content_safety(body.message)
         if not passed:
             logger.info("guard_check_blocked", check_type="content_safety", reason=reason)
@@ -185,16 +199,46 @@ async def chat_stream(request: Request, body: ChatRequest):
                 "I'm here to answer questions about Le Quoc Anh Tran's professional experience. "
                 "Please ask something related to his background, skills, or projects."
             )
+            yield _sse_step("checking_safety", "Question blocked", "done")
             yield _sse_event("blocked", msg)
             return
 
         logger.info("guard_check_passed")
+        yield _sse_step("checking_safety", "Question passed safety check", "done")
 
-        # 3. Retrieve conversation history
-        conversation = get_history(conversation_id)
+        # 2. RAG retrieval: embed the query and search the vector store for
+        # relevant context chunks. Failures here are non-fatal — we fall back
+        # to generating without retrieved context.
+        yield _sse_step("searching_kb", "Searching knowledge base...", "running")
 
-        # 4. Build system prompt and get provider
-        system_prompt = build_system_prompt()
+        from src.rag.embedding import embed_text
+        from src.rag.pipeline import search_similar
+
+        similar_docs = []
+        try:
+            query_embedding = await embed_text(body.message)
+            similar_docs = await search_similar(query_embedding, top_k=5)
+        except Exception as e:
+            logger.info(
+                "rag_search_failed",
+                error_type=type(e).__name__,
+                error_message=str(e),
+            )
+            similar_docs = []
+
+        rag_context = "\n\n---\n\n".join(str(d.content) for d in similar_docs)
+        logger.info("rag_search_complete", rag_chunks=len(similar_docs))
+        yield _sse_step(
+            "searching_kb",
+            f"Found {len(similar_docs)} relevant context chunks",
+            "done",
+        )
+
+        # 3. Build the system prompt with retrieved context and get provider
+        yield _sse_step("building_prompt", "Building prompt...", "running")
+
+        conversation = await get_history(conversation_id)
+        system_prompt = build_system_prompt(rag_context)
         provider = get_llm_provider(settings)
 
         system_tokens = count_tokens_approx(system_prompt)
@@ -212,10 +256,19 @@ async def chat_stream(request: Request, body: ChatRequest):
             conversation_tokens=conversation_tokens,
             user_message_tokens=user_message_tokens,
             total_prompt_tokens=total_prompt_tokens,
+            rag_chunks=len(similar_docs),
             streaming=True,
         )
 
-        # 5. Stream tokens from the LLM provider
+        yield _sse_step(
+            "building_prompt",
+            f"Prompt ready ({total_prompt_tokens} tokens)",
+            "done",
+        )
+
+        # 4. Stream tokens from the LLM provider
+        yield _sse_step("generating", "Generating response...", "running")
+
         full_response = ""
         try:
             async for chunk in provider.chat_stream(
@@ -232,6 +285,7 @@ async def chat_stream(request: Request, body: ChatRequest):
                 error_type=type(e).__name__,
                 error_message=str(e),
             )
+            yield _sse_step("generating", "Generation failed", "done")
             yield _sse_event("error", "I'm sorry, I encountered an error processing your request. Please try again.")
             return
 
@@ -239,6 +293,7 @@ async def chat_stream(request: Request, body: ChatRequest):
 
         if not full_response.strip():
             logger.info("llm_call_complete", model=provider.model_name(), response_empty=True)
+            yield _sse_step("generating", "Generation failed", "done")
             yield _sse_event("error", "I'm sorry, I encountered an error processing your request. Please try again.")
             return
 
@@ -249,13 +304,17 @@ async def chat_stream(request: Request, body: ChatRequest):
             latency_ms=llm_latency_ms,
         )
 
-        # 6. Persist the exchange
-        append_messages(conversation_id, [
+        yield _sse_step("generating", "Response generated", "done")
+
+        # 5. Persist the exchange
+        yield _sse_step("saving", "Saving conversation...", "running")
+        await append_messages(conversation_id, [
             {"role": "user", "content": body.message},
             {"role": "assistant", "content": full_response},
         ])
+        yield _sse_step("saving", "Conversation saved", "done")
 
-        # 7. Scrub PII from response
+        # 6. Scrub PII from response and send the final complete text
         safe_response = check_pii_leak(full_response)
 
         total_latency_ms = int((time.time() - start_time) * 1000)

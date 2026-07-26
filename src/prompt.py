@@ -1,45 +1,9 @@
 """
-Prompt builder: reads data files (resume.md, mock-qa.json, extra-context.md)
-and assembles them into a system prompt for the LLM.
+Prompt builder: assembles the system prompt for the LLM.
 
-Phase 1: reads from local files.
-Phase 2: may read from a database or vector store instead.
-
-Required files (must exist at startup):
-  - data/resume.md       — Your resume in markdown
-  - data/mock-qa.json    — Recruiter Q&A pairs (questions + answers)
-
-Optional files:
-  - data/extra-context.md — Additional context (projects, hobbies, philosophy)
-
-See data/resume.example.md and data/mock-qa.example.json for the expected format.
 """
-import json
-from pathlib import Path
 import tiktoken
 from src.config import settings
-
-# ─── Path resolution ──────────────────────────────────────────────────
-# __file__ is the absolute path to THIS file (prompt.py).
-# .parent goes up one directory: src/
-# .parent again: resume-backend/ (project root)
-# Then / "data" goes into the data/ folder.
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = _PROJECT_ROOT / "data"
-
-# ─── Validate required files at import time ───────────────────────────
-_REQUIRED_FILES = [
-    ("resume.md", "data/resume.md — your resume in markdown format"),
-    ("mock-qa.json", "data/mock-qa.json — recruiter Q&A pairs"),
-]
-
-for filename, hint in _REQUIRED_FILES:
-    if not (DATA_DIR / filename).exists():
-        raise FileNotFoundError(
-            f"Missing required data file: data/{filename}\n"
-            f"  {hint}\n"
-            f"  Copy data/{filename.replace('.', '.example.')} to data/{filename} and fill in your data."
-        )
 
 _ENCODING = tiktoken.get_encoding("cl100k_base")
 
@@ -96,35 +60,25 @@ Guidelines:
 """
 
 
-def build_system_prompt() -> str:
+def build_system_prompt(rag_context: str = "") -> str:
     """
-    Read data files and assemble the full system prompt for the LLM.
-    Returns a string containing: safety preamble + resume + mock Q&A + extra context.
+    Assemble the full system prompt for the LLM.
+
+    The prompt always starts with the safety preamble. If `rag_context` is
+    provided (retrieved chunks from the vector store), it is appended under a
+    "Relevant Background Information" section so the LLM can ground its answer
+    on Le Quoc Anh Tran's CV and professional background.
     """
     parts: list[str] = [_build_safety_preamble()]
 
-    # 1. Resume (required — validated at import time)
-    resume_path = DATA_DIR / "resume.md"
-    parts.append("\n\n## Resume\n\n" + _sanitize_unicode(resume_path.read_text(encoding="utf-8")))
-
-    # 2. Mock Q&A pairs (required — validated at import time)
-    qa_path = DATA_DIR / "mock-qa.json"
-    qa_data = json.loads(qa_path.read_text(encoding="utf-8"))
-    qa_lines = [f"\n\n## Common Q&A (example provided are from conversation between Recruiter and {settings.personal_name})\n"]
-    for item in qa_data:
-        question = _sanitize_unicode(item.get("question", ""))
-        answer = _sanitize_unicode(item.get("answer", ""))
-        qa_lines.append(f"Q: {question}")
-        if answer:
-            qa_lines.append(f"A: {answer}\n")
-        else:
-            qa_lines.append("A: (answer pending)\n")
-    parts.append("\n".join(qa_lines))
-
-    # 3. Extra context (optional — only include if the file exists)
-    extra_path = DATA_DIR / "extra-context.md"
-    if extra_path.exists():
-        parts.append("\n\n## Additional Context\n\n" + _sanitize_unicode(extra_path.read_text(encoding="utf-8")))
+    if rag_context:
+        parts.append(
+            "\n\n## Relevant Background Information\n\n"
+            "The following information was retrieved from Le Quoc Anh Tran's CV "
+            "and professional background. Use this to answer the recruiter's "
+            "question accurately:\n\n"
+            + _sanitize_unicode(rag_context)
+        )
 
     return "\n".join(parts)
 
