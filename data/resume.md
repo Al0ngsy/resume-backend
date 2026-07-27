@@ -113,3 +113,35 @@ _2016 until 2022_
 - Local LLMs and AI experimentation
 - ComfyUI — AI image generation workflows
 - Unreal Engine game development (C++ / Blueprints)
+
+---
+
+## Work Arrangement
+
+- **Remote** — Fully open to remote work worldwide
+- **Hybrid / On-site** — Nuremberg metropolitan area (reasonable commute)
+- **Driver's license** — Yes
+- **Relocation** — Open to discussing for the right opportunity
+
+---
+
+## Soft Skills
+
+| Skill | Description |
+| --- | --- |
+| **Teamwork** | Strong team player, shares knowledge freely, values constructive code reviews |
+| **Intercultural competence** | Born in Vietnam, raised in Germany — comfortable in multicultural, multilingual environments (Vietnamese native, German C2, English C1) |
+| **Constructive feedback** | Gives and receives feedback focused on principles and team standards, not personal preferences |
+| **Resilience** | Stays calm under pressure, especially during production incidents; focuses on solving the problem |
+| **Self-motivation** | Takes ownership from design to deployment, follows through on commitments without hand-holding |
+| **Goal-orientation** | Breaks work into concrete steps, tracks progress transparently, delivers consistently |
+| **Analytical thinking** | Breaks down complex problems, identifies root causes, makes data-driven decisions |
+| **Eagerness to learn** | Continuously evaluates new tech hands-on rather than just reading about it |
+| **Flexibility** | Adapts to changing requirements, new technologies, and shifting priorities without friction |
+| **Stress tolerance** | Triage, cut scope, communicate transparently — prevents stress through good architecture |
+| **Problem-solving** | Strategic approach: understand root cause first, gather data, reproduce, fix, document |
+| **Strategic approach** | Starts with requirements and constraints, identifies critical paths and failure modes |
+| **Quick comprehension** | Picks up new codebases, domains, and technologies rapidly |
+| **Structured work approach** | Design docs / RFCs for complex features, small concrete steps, transparent progress tracking |
+| **Active listening** | Understands others' perspectives before responding, especially in technical disagreements |
+| **Openness & curiosity** | Genuinely curious about new approaches, tools, and domains; open to feedback and alternative viewpoints |

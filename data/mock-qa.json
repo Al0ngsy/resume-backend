@@ -166,5 +166,49 @@
   {
     "question": "Do you have experience with frontend development?",
     "answer": "Yes. The CMS I develop and maintain at simpleTechs is built on React-Admin (https://marmelab.com/react-admin/), a frontend framework for building admin interfaces on top of REST/GraphQL APIs. Beyond that, I use React and Next.js for my own projects, including this portfolio site. I'm comfortable across the stack but my professional focus is backend."
+  },
+  {
+    "question": "What are your soft skills?",
+    "answer": "I have strong soft skills developed over 6+ years working in diverse, cross-functional teams. Teamwork and collaboration: I work well in teams, share knowledge freely, and value constructive code reviews. Intercultural competence: Born in Vietnam, raised in Germany, I'm comfortable working in multicultural and multilingual environments (Vietnamese native, German C2, English C1). Resilience and stress tolerance: I stay calm under pressure, especially during production incidents, and focus on solving the problem rather than panicking. Self-motivation and goal-orientation: I take ownership of my work from design to deployment and follow through on commitments. Analytical thinking: I break down complex problems into manageable parts, identify root causes, and make data-driven decisions. Eagerness to learn: I'm continuously learning new technologies and methodologies, evaluating them hands-on rather than just reading about them. Flexibility: I adapt to changing requirements, new technologies, and shifting priorities without friction. Problem-solving skills: I approach problems strategically, starting with understanding the root cause before jumping to solutions. Quick comprehension: I pick up new codebases, domains, and technologies quickly. Structured work approach: I break work into small, concrete steps, write design docs for complex features, and track progress transparently. Active listening: I make sure I understand others' perspectives before responding, especially in technical disagreements. Openness and curiosity: I'm genuinely curious about new approaches, tools, and domains, and I stay open to feedback and alternative viewpoints."
+  },
+  {
+    "question": "How would you describe your teamwork and collaboration style?",
+    "answer": "I'm a strong team player. I share knowledge freely, document what I learn, and make sure my colleagues can build on my work. In code reviews I'm constructive, never nitpicky, and I focus on teaching principles rather than just pointing out issues. I communicate blockers early and keep tickets updated so everyone has visibility. I don't have a big ego about my code; if someone has a better approach, I'm happy to change direction."
+  },
+  {
+    "question": "How do you handle intercultural communication?",
+    "answer": "I was born in Vietnam and moved to Germany at age 10, so I've been navigating between cultures my entire life. I speak Vietnamese (native), German (C2, near-native), and English (C1). At simpleTechs I worked in a multicultural team and interacted with international partners like Samsung and Waipu. I'm sensitive to different communication styles, I adapt my language and tone to the audience, and I make sure language barriers don't become knowledge barriers."
+  },
+  {
+    "question": "How do you deal with stress and pressure?",
+    "answer": "I'm resilient under pressure. When production issues happen, I stay calm, assess the impact, gather data, and work the problem systematically. I've learned that panicking or working longer hours makes things worse. Instead, I triage, cut scope where needed, communicate transparently with stakeholders, and focus on delivering something that resolves the situation. I also believe in preventing stress through good architecture, monitoring, and proactive communication."
+  },
+  {
+    "question": "How do you approach problem-solving?",
+    "answer": "I take a strategic, analytical approach. First I make sure I understand the problem and its root cause, not just the symptoms. I gather data, trace the issue through logs and metrics, and form a hypothesis. Then I try to reproduce it in a controlled environment before fixing. After the fix, I document what happened, why, and how to prevent it. I believe most problems are solvable with enough patience and the right data."
+  },
+  {
+    "question": "How quickly do you learn new things?",
+    "answer": "I have a quick comprehension and a strong eagerness to learn. When I started building the AI microservice at simpleTechs, I went from zero knowledge of LangChain and RAG to shipping a production system. I learn best by building something real with a new technology rather than just reading about it. I'm also not afraid to ask questions when I don't understand something, because asking early saves time for everyone."
+  },
+  {
+    "question": "How would you describe your work style?",
+    "answer": "Structured and self-driven. I start with a clear understanding of the problem, write a short design doc or RFC for complex features, break the work into small concrete steps, and track progress transparently. I write tests alongside code, open PRs early for feedback, and monitor deployments after merge. I take ownership from design to production and I don't need hand-holding to get things done."
+  },
+  {
+    "question": "Are you good at receiving feedback?",
+    "answer": "Yes, I welcome constructive feedback and see it as a chance to improve. In code reviews I focus on the code, not the person, and I expect the same from others. I've learned that the best engineers separate their ego from their work. If someone points out a better approach, I'm grateful, not defensive. I also give feedback constructively, focusing on principles and team standards rather than personal preferences."
+  },
+  {
+    "question": "How do you handle changing requirements or priorities?",
+    "answer": "I'm flexible and adaptable. When requirements change mid-sprint, I assess the impact, communicate the tradeoffs clearly, and let stakeholders decide. I don't resist change; I try to understand why the change is more valuable and adapt. I've found that most technical decisions are reversible, so it's better to move forward and learn than to debate indefinitely. Flexibility also means knowing when to push back on changes that would hurt the system long-term."
+  },
+  {
+    "question": "Is he open to remote work or relocation?",
+    "answer": "Yes. I'm fully open to remote work anywhere in the world — I'm comfortable working asynchronously across time zones and have experience collaborating with international partners like Samsung and Waipu. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg metropolitan area where the commute is reasonable. I have a driver's license. I'm not looking to relocate at this time, but I'm open to discussing it for the right opportunity."
+  },
+  {
+    "question": "What is your preferred work arrangement — remote, hybrid, or on-site?",
+    "answer": "I'm flexible. I'm fully open to remote work across the globe — I'm used to asynchronous communication, multilingual collaboration, and working with distributed teams. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg area with a reasonable commute. I have a driver's license. I value flexibility but I'm happy to be on-site when the team needs it."
   }
 ]
