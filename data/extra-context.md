@@ -33,7 +33,7 @@ Developed a structured migration framework for zero-downtime PostgreSQL schema c
 
 _2019 until 2026_
 
-Full-stack video-on-demand platform serving enterprise B2B clients. Payment integrations (PayPal, Stripe, IAP), content management, and partner feed APIs.
+Full-stack video-on-demand platform serving enterprise B2B clients. Payment integrations (PayPal, Stripe, IAP), content management, and partner feed APIs. Built with Express.js, Fastify, and Koa in the early years; later parts migrated to NestJS.
 
 ### Options Trading Prototype (Alpaca API)
 

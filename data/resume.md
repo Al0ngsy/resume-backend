@@ -9,7 +9,7 @@
 
 ## Professional Summary
 
-Backend Software Engineer with multiple years of experience designing and building scalable backend systems — payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, NestJS, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
+Backend Software Engineer with multiple years of experience designing and building scalable backend systems — payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Experienced across multiple Node.js frameworks including Express.js, Fastify, Koa, and NestJS. Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
 
 ---
 
@@ -34,7 +34,7 @@ _September 2019 until June 2024_
 - Integrated payment systems including **PayPal**, **Stripe**, and **in-app purchases (IAP)** for mobile platforms
 - Built and maintained a **Feed API** delivering content metadata to partners such as **Samsung** and **Waipu**
 - Worked on CMS backends, RESTful API design, and database schema migrations
-- Gained extensive experience with **TypeScript**, **Node.js**, **NestJS**, **PostgreSQL**, and **Prisma**
+- Gained extensive experience with **TypeScript**, **Node.js**, **Express.js**, **Fastify**, **Koa**, **PostgreSQL**, and **Prisma**
 
 ---
 
@@ -43,7 +43,7 @@ _September 2019 until June 2024_
 | Category      | Technologies                                          |
 | ------------- | ----------------------------------------------------- |
 | **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL                 |
-| **Backend**   | Node.js, NestJS, Express, REST APIs, GraphQL, FastAPI |
+| **Backend**   | Node.js, Express.js, Fastify, Koa, NestJS, REST APIs, GraphQL, FastAPI |
 | **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis               |
 | **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search   |
 | **DevOps**    | Docker, Kubernetes, Helm, CI/CD pipelines             |
@@ -86,6 +86,7 @@ _2019 until 2026_
 
 - Full-stack video-on-demand platform serving enterprise B2B clients
 - Payment integrations (PayPal, Stripe, IAP), content management, and partner feed APIs
+- Built with Express.js, Fastify, and Koa in the early years; later parts migrated to NestJS
 
 ### Options Trading Prototype (Alpaca API)
 
