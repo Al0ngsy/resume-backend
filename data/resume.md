@@ -2,14 +2,14 @@
 
 **Backend Software Engineer** | 6+ years experience  
 📍 Glogauer Str. 11, 90473 Nürnberg, Germany  
-📧 lequocanhtr@gmail.com | 📞 +49 17649615958  
+📧 lequocanhtr@gmail.com | 📞 +49 176 47615958  
 🌐 lequocanhtran.de | 🔗 [linkedin.com/in/lequocanhtr](https://linkedin.com/in/lequocanhtr) | 🐙 [github.com/Al0ngsy](https://github.com/Al0ngsy)
 
 ---
 
 ## Professional Summary
 
-Backend Software Engineer with multiple years of experience designing and building scalable backend systems — payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Experienced across multiple Node.js frameworks including Express.js, Fastify, Koa, and NestJS. Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
+Backend Software Engineer with multiple years of experience designing and building scalable backend systems — payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Experienced across multiple Node.js frameworks including Express.js, Fastify, Koa, and more recently NestJS. Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
 
 ---
 
@@ -19,10 +19,10 @@ Backend Software Engineer with multiple years of experience designing and buildi
 
 _July 2024 until August 2026_
 
-- Built and maintained an AI-powered microservice using **NestJS**, **LangChain**, and **OpenAI** for intelligent document processing and retrieval-augmented generation (RAG)
+- Built and maintained an AI-powered microservice using **LangChain**, **OpenAI**, and **NestJS** for intelligent document processing and retrieval-augmented generation (RAG)
 - Designed vector search pipelines with **PostgreSQL** + **pgvector** for semantic similarity search
-- Contributed backend features to the **FlexGold** gold trading platform using **NestJS** (from late 2025)
-- Continued development and maintenance of the **B2B SaaS VOD platform** - payment integrations, partner APIs, and database optimizations
+- Contributed backend features to the **FlexGold** gold trading platform (from late 2025) — first project using **NestJS**; prior backend work used **Express.js**, **Fastify**, and **Koa**
+- Continued development and maintenance of the **B2B SaaS VOD platform** — payment integrations, partner APIs, and database optimizations
 - Managed containerized deployments with **Docker** and **Kubernetes** (Helm charts)
 - Collaborated on cross-team API integrations and system architecture decisions
 
@@ -40,18 +40,18 @@ _September 2019 until June 2024_
 
 ## Technical Skills
 
-| Category      | Technologies                                          |
-| ------------- | ----------------------------------------------------- |
-| **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL                 |
+| Category      | Technologies                                                           |
+| ------------- | ---------------------------------------------------------------------- |
+| **Languages** | TypeScript, JavaScript, SQL, PL/pgSQL                                  |
 | **Backend**   | Node.js, Express.js, Fastify, Koa, NestJS, REST APIs, GraphQL, FastAPI |
-| **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis               |
-| **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search   |
-| **DevOps**    | Docker, Kubernetes, Helm, CI/CD pipelines             |
-| **Cloud**     | AWS S3, Google Pub/Sub                                |
-| **Frontend**  | React, HTML/CSS                                       |
-| **Testing**   | Jest, unit/integration/e2e testing                    |
-| **Tools**     | Git, GitHub Actions, VS Code, WebStorm                |
-| **Learning**  | Python, C#                                            |
+| **Databases** | PostgreSQL, pgvector, Prisma ORM, Redis                                |
+| **AI / LLM**  | LangChain, OpenAI API, RAG pipelines, vector search                    |
+| **DevOps**    | Docker, Kubernetes, Helm, CI/CD pipelines                              |
+| **Cloud**     | AWS S3, Google Pub/Sub                                                 |
+| **Frontend**  | React, HTML/CSS                                                        |
+| **Testing**   | Jest, unit/integration/e2e testing                                     |
+| **Tools**     | Git, GitHub Actions, VS Code, WebStorm                                 |
+| **Learning**  | Python, C#                                                             |
 
 ---
 

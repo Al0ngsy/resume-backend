@@ -1,7 +1,7 @@
 [
   {
     "question": "Can you tell me about yourself?",
-    "answer": "I'm a Backend Software Engineer with multiple years of experience building scalable systems — payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, and PostgreSQL, with experience across Express.js, Fastify, Koa, and NestJS. I've spent most of my career at simpleTechs GmbH in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
+    "answer": "I'm a Backend Software Engineer with multiple years of experience building scalable systems — payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, and PostgreSQL, with experience across Express.js, Fastify, Koa, and more recently NestJS. I've spent most of my career at simpleTechs GmbH, a small software company in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
   },
   {
     "question": "What is your strongest programming language?",
@@ -9,7 +9,7 @@
   },
   {
     "question": "What backend frameworks are you experienced with?",
-    "answer": "I've worked extensively with Express.js, Fastify, and Koa for years before adopting NestJS. NestJS came in later when I started working on the FlexGold gold trading platform. I've built production systems with all of them. On the Python side, I've worked with FastAPI for AI microservices. The very Backend of this resume service is build on Python. I understand the tradeoffs between opinionated frameworks like NestJS (great for large teams and complex domains) and minimal ones like Express, Fastify and Koa (better for simple APIs and microservices)."
+    "answer": "I've worked extensively with Express.js, Fastify, and Koa for years — those were my primary frameworks for most of my career. NestJS came later when I started working on the FlexGold gold trading platform in late 2025. I've built production systems with all of them. On the Python side, I've worked with FastAPI for AI microservices. The backend of this resume service is built on Python. I understand the tradeoffs between opinionated frameworks like NestJS (great for large teams and complex domains) and minimal ones like Express, Fastify and Koa (better for simple APIs and microservices)."
   },
   {
     "question": "Do you have experience with databases?",
