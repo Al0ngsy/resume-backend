@@ -4,6 +4,10 @@
     "answer": "I'm a Backend Software Engineer with multiple years of experience building scalable systems — payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, and PostgreSQL, with experience across Express.js, Fastify, Koa, and more recently NestJS. I've spent most of my career at simpleTechs GmbH, a small software company in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
   },
   {
+    "question": "Can you tell me about VEXARIUM?",
+    "answer": "VEXARIUM is a personal project I built — a pre-trade decision-support tool that runs a plain-language health check on any stock, ETF, or option before I buy or sell. I created it because I invest in stocks and ETFs myself and wanted a fast way to check a ticker, and sometimes options, before deciding. The backend is FastAPI (Python) with a technical-indicator engine, Alpaca market and options data, news sentiment, and an LLM-powered second opinion; the frontend is SvelteKit with a health-check verdict for each symbol. It uses PostgreSQL and Redis is deployed on Render (API) and Cloudflare Pages (frontend). It also gave me hands-on experience with Python and SvelteKit beyond my usual TypeScript/Node.js stack."
+  },
+  {
     "question": "What is your strongest programming language?",
     "answer": "TypeScript, without a doubt. I've been using it daily for over 6 years across backend (Express.js, Fastify, Koa, NestJS, Node.js) and frontend (React). I'm also somewhat ok with Python for AI/LLM work and scripting, and SQL for database design and optimization."
   },

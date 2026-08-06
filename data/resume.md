@@ -67,6 +67,15 @@ _September 2019 until June 2024_
 
 ## Projects
 
+### VEXARIUM: Stock & ETF Health Check (Personal Project)
+
+_2026_
+
+- Built a full-stack decision-support tool that runs a plain-language health check on any stock, ETF, or option before buying or selling — technical indicators, options data, news sentiment, and an AI second opinion
+- FastAPI backend (Python) with a technical-indicator engine, Alpaca market/options data, and LLM-powered analysis; SvelteKit frontend with a health-check verdict per symbol
+- PostgreSQL, Redis, Docker; deployed on Render (API) and Cloudflare Pages (frontend)
+- Personal project: I invest in stocks and ETFs myself and wanted a fast way to check a ticker — and sometimes options — before buying or selling
+
 ### AI Microservice (NestJS + LangChain + RAG)
 
 _2025 until 2026_
