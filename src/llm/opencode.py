@@ -11,23 +11,21 @@ from src.logging_config import getLogger
 _log = getLogger(__name__)
 
 
-class OllamaProvider(LLMProvider):
-    """
-    LLM provider for Ollama (local or cloud).
-    Thinking/reasoning output (e.g.  thinking tags from deepseek-r1)
-    is suppressed by passing appropriate extra_body options.
+class OpenCodeProvider(LLMProvider):
+    """LLM provider for OpenCode Go — a low-cost subscription service.
+
+    OpenAI-compatible endpoint (https://opencode.ai/zen/go/v1) serving a
+    curated set of coding models (deepseek-v4-*, kimi-k2.*, glm-5.*, etc.).
     """
 
     def __init__(self, settings: Settings):
         self._client = AsyncOpenAI(
-            api_key=settings.ollama_api_key or "ollama",
-            base_url=settings.ollama_base_url,
+            api_key=settings.opencode_api_key,
+            base_url=settings.opencode_base_url,
         )
-        self._model = settings.ollama_model
-        # Thinking control (high|medium|low|none). Passed through as the
-        # OpenAI-compat `reasoning_effort` param; "none" disables thinking.
+        self._model = settings.opencode_model
         self._reasoning_effort: Literal["none", "low", "medium", "high"] = (
-            settings.ollama_reasoning_effort
+            settings.opencode_reasoning_effort
         )
 
     def model_name(self) -> str:
@@ -49,17 +47,17 @@ class OllamaProvider(LLMProvider):
                 model=self._model,
                 messages=messages,
                 temperature=0.5,
-                reasoning_effort=self._reasoning_effort,
+                reasoning_effort=self._reasoning_effort
             )
             return response.choices[0].message.content
         except Exception as e:
             _log.error(
-                "ollama_call_failed",
+                "opencode_call_failed",
                 model=self._model,
                 error_type=type(e).__name__,
                 error_message=str(e),
             )
-            raise RuntimeError(f"Ollama call failed: {e}") from e
+            raise RuntimeError(f"OpenCode call failed: {e}") from e
 
     async def chat_stream(
         self,
@@ -77,8 +75,9 @@ class OllamaProvider(LLMProvider):
                 model=self._model,
                 messages=messages,
                 temperature=0.5,
-                reasoning_effort=self._reasoning_effort,
                 stream=True,
+                reasoning_effort=self._reasoning_effort
+
             )
             async for chunk in stream:
                 delta = chunk.choices[0].delta.content
@@ -86,9 +85,9 @@ class OllamaProvider(LLMProvider):
                     yield delta
         except Exception as e:
             _log.error(
-                "ollama_stream_failed",
+                "opencode_stream_failed",
                 model=self._model,
                 error_type=type(e).__name__,
                 error_message=str(e),
             )
-            raise RuntimeError(f"Ollama stream failed: {e}") from e
+            raise RuntimeError(f"OpenCode stream failed: {e}") from e

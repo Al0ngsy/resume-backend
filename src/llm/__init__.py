@@ -2,6 +2,7 @@ from src.config import Settings
 from src.llm.base import LLMProvider
 from src.llm.ollama import OllamaProvider
 from src.llm.openrouter import OpenRouterProvider
+from src.llm.opencode import OpenCodeProvider
 
 
 def get_llm_provider(settings: Settings) -> LLMProvider:
@@ -14,6 +15,8 @@ def get_llm_provider(settings: Settings) -> LLMProvider:
         return OllamaProvider(settings)
     elif settings.llm_provider == "openrouter":
         return OpenRouterProvider(settings)
+    elif settings.llm_provider == "opencode":
+        return OpenCodeProvider(settings)
     raise ValueError(f"Unknown LLM provider: {settings.llm_provider}")
 
 

@@ -2,14 +2,14 @@
 
 AI-powered resume chatbot backend for Le Quoc Anh Tran, Backend Software Engineer.
 
-Serve as Python learning project.
+Built as a Python learning project: FastAPI, async SQLAlchemy, RAG, and a swappable LLM layer.
 
 ## Tech Stack
 
 - **Framework:** FastAPI
 - **Language:** Python 3.11+
 - **Package Manager:** uv
-- **LLM Abstraction:** OpenAI-compatible (Ollama → OpenRouter)
+- **LLM Abstraction:** OpenAI-compatible (Ollama → OpenRouter → OpenCode Go)
 - **Database:** Neon PostgreSQL + pgvector (RAG vector search + conversation persistence)
 - **Embeddings:** Jina AI (jina-embeddings-v3, 1024 dims) — 10M free tokens
 - **Validation:** Pydantic v2 + pydantic-settings
@@ -53,24 +53,19 @@ uv run pytest -k "injection" -v
 
 ## API Endpoints
 
-```bash
-
-| Method | Path                      | Description                          |
-| ------ | ------------------------- | ------------------------------------ |
-| GET    | `/`                       | Root                                 |
-| GET    | `/api/health`             | Health check + uptime                 |
-| POST   | `/api/chat`               | Chat with the AI (non-streaming)     |
-| POST   | `/api/chat/stream`         | Chat with the AI (SSE streaming + step progress) |
-| POST   | `/api/conversations`      | Create new conversation              |
-| GET    | `/api/conversations/{id}` | Get conversation history            |
-| POST   | `/api/admin/reindex`       | Re-index RAG documents               |
-
-```
+| Method | Path                      | Description                                      |
+| ------ | ------------------------- | ------------------------------------------------ |
+| GET    | `/`                       | Root                                             |
+| GET    | `/api/health`             | Health check + uptime                            |
+| POST   | `/api/chat`               | Chat with the AI (non-streaming)                 |
+| POST   | `/api/chat/stream`        | Chat with the AI (SSE streaming + step progress) |
+| POST   | `/api/conversations`      | Create new conversation                          |
+| GET    | `/api/conversations/{id}` | Get conversation history                         |
+| POST   | `/api/admin/reindex`      | Re-index RAG documents                           |
 
 ## Architecture
 
-```bash
-
+```text
 Middleware Layer
 ├── CORS (Cloudflare Pages origin)
 ├── Rate limiter (per IP + per conversation)
@@ -94,7 +89,6 @@ Core Layer
 ├── Embedding service (Jina AI, 1024 dims)
 ├── Conversation store (Neon PostgreSQL via SQLAlchemy 2.0 async)
 └── Structured logging (structlog JSON)
-
 ```
 
 ## RAG Pipeline
@@ -194,24 +188,33 @@ The admin endpoint is rate-limited to 5 calls/day to prevent abuse.
 
 ## Environment Variables
 
-| Variable                      | Description                       | Default                     |
-| ----------------------------- | --------------------------------- | --------------------------- |
-| `LLM_PROVIDER`                | LLM provider: ollama, openrouter  | `ollama`                    |
-| `OLLAMA_BASE_URL`             | Ollama API base URL               | `http://localhost:11434/v1` |
-| `OLLAMA_MODEL`                | Ollama model name                 | `llama3.2`                  |
-| `OLLAMA_API_KEY`              | Ollama API key                    | —                           |
-| `OPENROUTER_API_KEY`          | OpenRouter API key (fallback)     | —                           |
-| `OPENROUTER_MODEL`            | OpenRouter model name             | —                           |
-| `DATABASE_URL`                | Neon PostgreSQL connection string | —                           |
-| `EMBEDDING_API_KEY`           | Jina AI API key (for embeddings)  | —                           |
-| `EMBEDDING_BASE_URL`          | Embedding API base URL            | `https://api.jina.ai/v1`    |
-| `EMBEDDING_MODEL`             | Embedding model name              | `jina-embeddings-v3`        |
-| `EMBEDDING_DIMENSIONS`        | Embedding vector dimensions       | `1024`                      |
-| `RATE_LIMIT_PER_IP`           | Requests per IP                   | `10/minute`                 |
-| `RATE_LIMIT_PER_CONVERSATION` | Requests per conversation         | `30/5minutes`               |
-| `CORS_ORIGINS`                | Allowed CORS origins              | `http://localhost:3000`     |
-| `API_KEY`                     | Shared secret for frontend auth   | —                           |
-| `LOG_LEVEL`                   | Log level                         | `info`                      |
+| Variable                      | Description                                      | Default                         |
+| ----------------------------- | ------------------------------------------------ | ------------------------------- |
+| `LLM_PROVIDER`                | LLM provider: ollama, openrouter, opencode       | `ollama`                        |
+| `OLLAMA_BASE_URL`             | Ollama API base URL                              | `http://localhost:11434/v1`     |
+| `OLLAMA_API_KEY`              | Ollama API key (cloud only)                      | —                               |
+| `OLLAMA_MODEL`                | Ollama model name                                | `ornith:latest`                 |
+| `OLLAMA_REASONING_EFFORT`     | Ollama thinking mode (none/low/medium/high)      | `none`                          |
+| `OPENROUTER_BASE_URL`         | OpenRouter API base URL                          | `https://openrouter.ai/api/v1`  |
+| `OPENROUTER_API_KEY`          | OpenRouter API key (fallback)                    | —                               |
+| `OPENROUTER_MODEL`            | OpenRouter model name                            | —                               |
+| `OPENCODE_BASE_URL`           | OpenCode Go API base URL                         | `https://opencode.ai/zen/go/v1` |
+| `OPENCODE_API_KEY`            | OpenCode Go API key (subscription)               | —                               |
+| `OPENCODE_MODEL`              | OpenCode Go model name                           | `deepseek-v4-flash`             |
+| `OPENCODE_REASONING_EFFORT`   | OpenCode Go thinking mode (none/low/medium/high) | `none`                          |
+| `DATABASE_URL`                | Neon PostgreSQL connection string                | —                               |
+| `EMBEDDING_BASE_URL`          | Embedding API base URL                           | `https://api.jina.ai/v1`        |
+| `EMBEDDING_API_KEY`           | Jina AI API key (for embeddings)                 | —                               |
+| `EMBEDDING_MODEL`             | Embedding model name                             | `jina-embeddings-v3`            |
+| `EMBEDDING_DIMENSIONS`        | Embedding vector dimensions                      | `1024`                          |
+| `RATE_LIMIT_PER_IP`           | Requests per IP                                  | `3/minute`                      |
+| `RATE_LIMIT_PER_CONVERSATION` | Requests per conversation                        | `12/day`                        |
+| `CORS_ORIGINS`                | Allowed CORS origins                             | `http://localhost:3000`         |
+| `API_KEY`                     | Shared secret for frontend auth                  | —                               |
+| `LOCAL`                       | Enable admin endpoints in dev                    | `false`                         |
+| `ALLOWED_EMAILS`              | Emails exempt from PII redaction                 | —                               |
+| `ALLOWED_PHONES`              | Phones exempt from PII redaction                 | —                               |
+| `LOG_LEVEL`                   | Log level                                        | `info`                          |
 
 ## Database Migrations
 

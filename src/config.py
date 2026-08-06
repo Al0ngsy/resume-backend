@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import model_validator
+from typing import Literal
 
 
 class Settings(BaseSettings):
@@ -17,12 +18,25 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434/v1"
     ollama_api_key: str = ""  # local models does not require an API key, only if using Ollama Cloud
     ollama_model: str = "ornith:latest"
+    # Thinking mode for Ollama reasoning models (high|medium|low|none).
+    # "none" disables thinking entirely for the fastest answers; lower effort
+    # trades a bit of depth for speed. Maps to the OpenAI-compat `reasoning_effort`.
+    ollama_reasoning_effort: Literal["none", "low", "medium", "high"] = "none"
 
     # OpenRouter settings -- fallback on ollama
     openrouter_api_key: str = ""
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     openrouter_model: str = ""
 
+    # OpenCode Go settings — OpenAI-compatible endpoint (opencode.ai/zen/go).
+    # A low-cost subscription service serving curated coding models
+    # (deepseek-v4-*, kimi-k2.*, glm-5.*, mimo-v2.*, etc.).
+    opencode_api_key: str = ""
+    opencode_base_url: str = "https://opencode.ai/zen/go/v1"
+    opencode_model: str = "deepseek-v4-flash"
+    # Thinking mode for OpenCode Go
+    opencode_reasoning_effort: Literal["none", "low", "medium", "high"] = "none"
+  
     # Rate limiting
     rate_limit_per_ip: str = "3/minute"  # 3 requests per minute per IP address
     rate_limit_per_conversation: str = "12/day"  # 12 request per conversation per day, afterwards the recruiter is prompted to contact directy instead
@@ -68,6 +82,12 @@ class Settings(BaseSettings):
             raise ValueError(
                 "OPENROUTER_API_KEY is required when LLM_PROVIDER=openrouter.\n"
                 "  Either set OPENROUTER_API_KEY in your .env file,\n"
+                "  or change LLM_PROVIDER to 'ollama'."
+            )
+        if self.llm_provider == "opencode" and not self.opencode_api_key:
+            raise ValueError(
+                "OPENCODE_API_KEY is required when LLM_PROVIDER=opencode.\n"
+                "  Get a key at https://opencode.ai/auth (OpenCode Go subscription),\n"
                 "  or change LLM_PROVIDER to 'ollama'."
             )
         return self
