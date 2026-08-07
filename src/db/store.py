@@ -69,17 +69,6 @@ async def get_history(conversation_id: str) -> list[ChatCompletionMessageParam]:
         ]  # type: ignore[return-value]
 
 
-async def append_message(
-    conversation_id: str,
-    message: ChatCompletionMessageParam,
-) -> None:
-    """Append a single message to a conversation's history.
-
-    Creates the conversation row if it doesn't already exist.
-    """
-    await append_messages(conversation_id, [message])
-
-
 async def append_messages(
     conversation_id: str,
     messages: Sequence[ChatCompletionMessageParam],

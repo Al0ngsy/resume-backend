@@ -50,85 +50,18 @@ def _extract_pdf_text(pdf_path: Path) -> str:
 
 
 async def reindex_all() -> dict[str, int]:
-    """Rebuild the documents table from PDFs and the mock Q&A file.
+    """Rebuild the documents table from all PDF sources and the Q&A file.
 
-    Steps:
-      1. Delete all existing Document rows.
-      2. Extract + chunk each PDF source.
-      3. Load + chunk the Q&A pairs.
-      4. Batch-embed all chunk contents.
-      5. Insert Document rows with embeddings and commit.
-    Returns a summary mapping source key to number of chunks ingested.
+    Equivalent to calling reindex_source() for every source — each source is
+    deleted and re-inserted independently.
     """
     _log.info("reindex_start")
-    _ensure_engine()
-    from src.db.database import AsyncSessionLocal
-
-    all_chunks: list[dict[str, Any]] = []
     summary: dict[str, int] = {}
-
-    # 1. PDF sources
-    for source_key, pdf_path in PDF_FILES.items():
-        if not pdf_path.exists():
-            _log.warning("pdf_missing", source=source_key, path=str(pdf_path))
-            continue
-        _log.info("extracting_pdf", source=source_key, path=str(pdf_path))
-        text = _extract_pdf_text(pdf_path)
-        if not text.strip():
-            _log.warning("pdf_empty_text", source=source_key, path=str(pdf_path))
-            continue
-        chunks = chunk_text(text, source_key)
-        all_chunks.extend(chunks)
-        summary[source_key] = len(chunks)
-        _log.info("chunked_pdf", source=source_key, chunks=len(chunks))
-
-    # 2. Q&A source
-    if QA_PATH.exists():
-        _log.info("loading_qa", path=str(QA_PATH))
-        with open(QA_PATH, "r", encoding="utf-8") as f:
-            qa_data = json.load(f)
-        qa_chunks = chunk_qa_pairs(qa_data)
-        all_chunks.extend(qa_chunks)
-        summary["qa"] = len(qa_chunks)
-        _log.info("chunked_qa", chunks=len(qa_chunks))
-    else:
-        _log.warning("qa_missing", path=str(QA_PATH))
-
-    if not all_chunks:
-        _log.warning("reindex_no_chunks")
-        return summary
-
-    # 3. Batch-embed all chunk contents
-    texts = [c["content"] for c in all_chunks]
-    _log.info("embedding_chunks", count=len(texts))
-    embeddings = await embed_batch(texts)
-    if len(embeddings) != len(all_chunks):
-        raise RuntimeError(
-            f"Embedding count mismatch: got {len(embeddings)} for "
-            f"{len(all_chunks)} chunks"
-        )
-
-    # 4. Build Document rows
-    documents: list[Document] = []
-    for chunk, emb in zip(all_chunks, embeddings):
-        documents.append(
-            Document(
-                source=chunk["source"],
-                chunk_index=chunk["chunk_index"],
-                content=chunk["content"],
-                embedding=emb,
-                metadata_=chunk.get("metadata"),
-            )
-        )
-
-    # 5. Persist: delete old rows, insert new, commit
-    async with AsyncSessionLocal() as session:  # type: ignore[misc]
-        await session.execute(delete(Document))
-        _log.info("deleted_old_documents")
-        session.add_all(documents)
-        await session.commit()
-        _log.info("inserted_documents", count=len(documents))
-
+    for source in [*PDF_FILES, "qa"]:
+        try:
+            summary[source] = await reindex_source(source)
+        except (FileNotFoundError, ValueError) as e:
+            _log.warning("reindex_skipped", source=source, error=str(e))
     _log.info("reindex_complete", summary=summary)
     return summary
 

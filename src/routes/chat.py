@@ -1,8 +1,11 @@
+import json
 import time
+from collections.abc import Sequence
 
 import structlog
 from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
+from openai.types.chat import ChatCompletionMessageParam
 
 from src.config import settings
 from src.llm import get_llm_provider
@@ -13,6 +16,49 @@ from src.prompt import build_system_prompt, count_tokens_approx
 from src.models import ChatRequest, ChatResponse
 
 router = APIRouter(prefix="/api", tags=["chat"])
+
+_ERROR_MESSAGE = "I'm sorry, I encountered an error processing your request. Please try again."
+
+
+def _refusal_message(guard: str) -> str:
+    """Polite refusal for a blocked message (guard: 'prompt_injection' or 'content_safety')."""
+    if guard == "prompt_injection":
+        return (
+            "I'm sorry, but I can't process that request. "
+            f"Please ask a question about {settings.personal_name}'s professional background."
+        )
+    return (
+        f"I'm here to answer questions about {settings.personal_name}'s professional experience. "
+        "Please ask something related to his background, skills, or projects."
+    )
+
+
+def _count_prompt_tokens(
+    system_prompt: str,
+    conversation: Sequence[ChatCompletionMessageParam],
+    user_message: str,
+) -> tuple[int, int, int, int]:
+    """Token counts (system, conversation, user, total) for logging."""
+    system_tokens = count_tokens_approx(system_prompt)
+    conversation_tokens = count_tokens_approx(
+        " ".join(str(m.get("content", "")) for m in conversation)
+    )
+    user_message_tokens = count_tokens_approx(user_message)
+    return (
+        system_tokens,
+        conversation_tokens,
+        user_message_tokens,
+        system_tokens + conversation_tokens + user_message_tokens,
+    )
+
+
+async def _save_and_scrub(conversation_id: str, user_message: str, assistant_text: str) -> str:
+    """Persist the exchange and return the PII-scrubbed assistant text."""
+    await append_messages(conversation_id, [
+        {"role": "user", "content": user_message},
+        {"role": "assistant", "content": assistant_text},
+    ])
+    return check_pii_leak(assistant_text)
 
 
 @router.post("/chat", response_model=ChatResponse)
@@ -31,40 +77,32 @@ async def chat(request: Request, body: ChatRequest):
 
     logger.info("request_received", message_length=len(body.message))
 
-    # 1. Guard: prompt injection check
-    passed, reason = check_prompt_injection(body.message)
-    if not passed:
-        logger.info("guard_check_blocked", check_type="prompt_injection", reason=reason)
-        return ChatResponse(
-            response=f"I'm sorry, but I can't process that request. Please ask a question about {settings.personal_name}'s professional background.",
-            conversation_id=conversation_id,
-        )
-
-    # 2. Guard: content safety / on-topic check
-    passed, reason = check_content_safety(body.message)
-    if not passed:
-        logger.info("guard_check_blocked", check_type="content_safety", reason=reason)
-        return ChatResponse(
-            response=f"I'm here to answer questions about {settings.personal_name}'s professional experience. Please ask something related to his background, skills, or projects.",
-            conversation_id=conversation_id,
-        )
+    # 1. Guards: prompt injection + content safety
+    for guard, check in (
+        ("prompt_injection", check_prompt_injection),
+        ("content_safety", check_content_safety),
+    ):
+        passed, reason = check(body.message)
+        if not passed:
+            logger.info("guard_check_blocked", check_type=guard, reason=reason)
+            return ChatResponse(
+                response=_refusal_message(guard),
+                conversation_id=conversation_id,
+            )
 
     logger.info("guard_check_passed")
 
-    # 3. Retrieve conversation history from server-side store
+    # 2. Retrieve conversation history from server-side store
     conversation = await get_history(conversation_id)
 
-    # 4. Build system prompt from data files and send to LLM
+    # 3. Build system prompt from data files and send to LLM
     system_prompt = build_system_prompt()
     provider = get_llm_provider(settings)
 
     # Token accounting: system prompt, conversation history, and current user message
-    system_tokens = count_tokens_approx(system_prompt)
-    conversation_tokens = count_tokens_approx(
-        " ".join(str(m.get("content", "")) for m in conversation)
+    system_tokens, conversation_tokens, user_message_tokens, total_prompt_tokens = (
+        _count_prompt_tokens(system_prompt, conversation, body.message)
     )
-    user_message_tokens = count_tokens_approx(body.message)
-    total_prompt_tokens = system_tokens + conversation_tokens + user_message_tokens
 
     logger.info(
         "llm_call_start",
@@ -89,19 +127,13 @@ async def chat(request: Request, body: ChatRequest):
             error_type=type(e).__name__,
             error_message=str(e),
         )
-        return ChatResponse(
-            response="I'm sorry, I encountered an error processing your request. Please try again.",
-            conversation_id=conversation_id,
-        )
+        return ChatResponse(response=_ERROR_MESSAGE, conversation_id=conversation_id)
 
     llm_latency_ms = int((time.time() - start_time) * 1000)
 
     if response_text is None:
         logger.info("llm_call_complete", model=provider.model_name(), response_empty=True)
-        return ChatResponse(
-            response="I'm sorry, I encountered an error processing your request. Please try again.",
-            conversation_id=conversation_id,
-        )
+        return ChatResponse(response=_ERROR_MESSAGE, conversation_id=conversation_id)
 
     logger.info(
         "llm_call_complete",
@@ -110,14 +142,8 @@ async def chat(request: Request, body: ChatRequest):
         latency_ms=llm_latency_ms,
     )
 
-    # 5. Persist the exchange to the store
-    await append_messages(conversation_id, [
-        {"role": "user", "content": body.message},
-        {"role": "assistant", "content": response_text},
-    ])
-
-    # 6. Scrub PII from response
-    safe_response = check_pii_leak(response_text)
+    # 4. Persist the exchange, then scrub PII from the response
+    safe_response = await _save_and_scrub(conversation_id, body.message, response_text)
 
     total_latency_ms = int((time.time() - start_time) * 1000)
     logger.info(
@@ -152,8 +178,6 @@ def _sse_step(step_id: str, label: str, status: str) -> str:
     The client can render a progress indicator from these step events.
     `status` is typically "running" (step started) or "done" (step finished).
     """
-    import json
-
     data = json.dumps({"step": step_id, "label": label, "status": status})
     return _sse_event("step", data)
 
@@ -178,30 +202,19 @@ async def chat_stream(request: Request, body: ChatRequest):
     logger.info("request_received", message_length=len(body.message), streaming=True)
 
     async def event_generator():
-        # 1. Guard: prompt injection + content safety
+        # 1. Guards: prompt injection + content safety
         yield _sse_step("checking_safety", "Checking question safety...", "running")
 
-        passed, reason = check_prompt_injection(body.message)
-        if not passed:
-            logger.info("guard_check_blocked", check_type="prompt_injection", reason=reason)
-            msg = (
-                "I'm sorry, but I can't process that request. "
-                f"Please ask a question about {settings.personal_name}'s professional background."
-            )
-            yield _sse_step("checking_safety", "Question blocked", "done")
-            yield _sse_event("blocked", msg)
-            return
-
-        passed, reason = check_content_safety(body.message)
-        if not passed:
-            logger.info("guard_check_blocked", check_type="content_safety", reason=reason)
-            msg = (
-                f"I'm here to answer questions about {settings.personal_name}'s professional experience. "
-                "Please ask something related to his background, skills, or projects."
-            )
-            yield _sse_step("checking_safety", "Question blocked", "done")
-            yield _sse_event("blocked", msg)
-            return
+        for guard, check in (
+            ("prompt_injection", check_prompt_injection),
+            ("content_safety", check_content_safety),
+        ):
+            passed, reason = check(body.message)
+            if not passed:
+                logger.info("guard_check_blocked", check_type=guard, reason=reason)
+                yield _sse_step("checking_safety", "Question blocked", "done")
+                yield _sse_event("blocked", _refusal_message(guard))
+                return
 
         logger.info("guard_check_passed")
         yield _sse_step("checking_safety", "Question passed safety check", "done")
@@ -241,12 +254,9 @@ async def chat_stream(request: Request, body: ChatRequest):
         system_prompt = build_system_prompt(rag_context)
         provider = get_llm_provider(settings)
 
-        system_tokens = count_tokens_approx(system_prompt)
-        conversation_tokens = count_tokens_approx(
-            " ".join(str(m.get("content", "")) for m in conversation)
+        system_tokens, conversation_tokens, user_message_tokens, total_prompt_tokens = (
+            _count_prompt_tokens(system_prompt, conversation, body.message)
         )
-        user_message_tokens = count_tokens_approx(body.message)
-        total_prompt_tokens = system_tokens + conversation_tokens + user_message_tokens
 
         logger.info(
             "llm_call_start",
@@ -286,7 +296,7 @@ async def chat_stream(request: Request, body: ChatRequest):
                 error_message=str(e),
             )
             yield _sse_step("generating", "Generation failed", "done")
-            yield _sse_event("error", "I'm sorry, I encountered an error processing your request. Please try again.")
+            yield _sse_event("error", _ERROR_MESSAGE)
             return
 
         llm_latency_ms = int((time.time() - start_time) * 1000)
@@ -294,7 +304,7 @@ async def chat_stream(request: Request, body: ChatRequest):
         if not full_response.strip():
             logger.info("llm_call_complete", model=provider.model_name(), response_empty=True)
             yield _sse_step("generating", "Generation failed", "done")
-            yield _sse_event("error", "I'm sorry, I encountered an error processing your request. Please try again.")
+            yield _sse_event("error", _ERROR_MESSAGE)
             return
 
         logger.info(
@@ -306,16 +316,10 @@ async def chat_stream(request: Request, body: ChatRequest):
 
         yield _sse_step("generating", "Response generated", "done")
 
-        # 5. Persist the exchange
+        # 5. Persist the exchange, scrub PII, and send the final complete text
         yield _sse_step("saving", "Saving conversation...", "running")
-        await append_messages(conversation_id, [
-            {"role": "user", "content": body.message},
-            {"role": "assistant", "content": full_response},
-        ])
+        safe_response = await _save_and_scrub(conversation_id, body.message, full_response)
         yield _sse_step("saving", "Conversation saved", "done")
-
-        # 6. Scrub PII from response and send the final complete text
-        safe_response = check_pii_leak(full_response)
 
         total_latency_ms = int((time.time() - start_time) * 1000)
         logger.info(

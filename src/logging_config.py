@@ -2,6 +2,8 @@ import structlog
 import logging
 import sys
 
+from src.config import settings
+
 def setup_logging() -> None:
   """
     Configure structlog to output JSON to stdout.
@@ -12,7 +14,7 @@ def setup_logging() -> None:
   # WARNING level silently drops all our info() calls.
   logging.basicConfig(
       format="%(message)s",
-      level=logging.INFO,
+      level=getattr(logging, settings.log_level.upper(), logging.INFO),
       stream=sys.stdout,
   )
 

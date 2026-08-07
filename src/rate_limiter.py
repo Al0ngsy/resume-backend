@@ -18,10 +18,6 @@ def _getConversationKey(request: Request) -> str:
 limiterConv = Limiter(key_func=_getConversationKey)
 
 def configureRateLimit(app: FastAPI) -> None:
-    # store this on the app state so the routes have access to them
-    app.state.limiterIp = limiterIp
-    app.state.limiterConv = limiterConv
-
     @app.exception_handler(RateLimitExceeded)
     async def _rateLimitHandler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
         return JSONResponse(

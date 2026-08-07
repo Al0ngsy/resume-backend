@@ -111,11 +111,6 @@ class _FakeStore:
     async def get_history(self, conversation_id: str) -> list[dict[str, str]]:
         return list(self._store.get(conversation_id, []))
 
-    async def append_message(
-        self, conversation_id: str, message: dict[str, str]
-    ) -> None:
-        self._store.setdefault(conversation_id, []).append(message)
-
     async def append_messages(
         self, conversation_id: str, messages: list[dict[str, str]]
     ) -> None:

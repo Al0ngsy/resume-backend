@@ -18,26 +18,3 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     conversation_id: str
-
-
-class ErrorResponse(BaseModel):
-    error: str
-    message: str
-    retry_after_seconds: int | None = None  # Only present for rate limit errors
-
-
-class ConversationCreateResponse(BaseModel):
-    conversation_id: str
-    created_at: str
-
-
-class ConversationMessage(BaseModel):
-    role: str  # "user" or "assistant"
-    content: str
-    timestamp: str
-
-
-class ConversationResponse(BaseModel):
-    conversation_id: str
-    message_count: int
-    messages: list[ConversationMessage]
