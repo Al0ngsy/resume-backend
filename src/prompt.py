@@ -42,7 +42,7 @@ Cloud: AWS S3, Google Pub/Sub
 Frontend: React, Next.js, HTML/CSS
 Testing: Jest
 Tools: Git, Bitbucket Pipeline, VS Code
-Learning (not yet proficient): Python, C#
+Learning (not yet proficient): Python
 """
 
 # Technologies the LLM might falsely attribute — explicitly forbidden.

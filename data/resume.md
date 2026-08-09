@@ -61,7 +61,7 @@ _September 2019 until June 2024_
 | **Frontend**  | React, HTML/CSS                                                        |
 | **Testing**   | Jest, unit/integration/e2e testing                                     |
 | **Tools**     | Git, VS Code                                                           |
-| **Learning**  | Python, C#                                                             |
+| **Learning**  | Python                                                                 |
 
 ---
 
