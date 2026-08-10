@@ -9,7 +9,7 @@
 
 ## Professional Summary
 
-Backend Software Engineer with multiple years of experience designing and building scalable backend systems — payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Experienced across multiple Node.js frameworks including Express.js, Fastify, Koa, and more recently NestJS. Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
+Backend Software Engineer with multiple years of experience designing and building scalable backend systems across payments, authentication, CMS, APIs, and AI-powered services. Proficient in TypeScript, Node.js, PostgreSQL, and cloud-native infrastructure (Docker, Kubernetes, Helm). Experienced across multiple Node.js frameworks including Express.js, Fastify, Koa, and more recently NestJS. Strong background in event-driven architectures, RESTful API design, and database optimization. Passionate about AI/LLM integration, clean architecture, and developer productivity.
 
 ---
 
@@ -25,18 +25,18 @@ Since 2019, he has been working as a Software Developer at simpleTechs GmbH, a s
 
 ## Work Experience
 
-### Software Engineer — simpleTechs GmbH, Berlin
+### Software Engineer, simpleTechs GmbH, Berlin
 
 _July 2024 until August 2026_
 
 - Built and maintained an AI-powered microservice using **LangChain**, **OpenAI**, and **NestJS** for intelligent document processing and retrieval-augmented generation (RAG)
 - Designed vector search pipelines with **PostgreSQL** + **pgvector** for semantic similarity search
-- Contributed backend features to the **FlexGold** gold trading platform (from late 2025) — first project using **NestJS**; prior backend work used **Express.js**, **Fastify**, and **Koa**
-- Continued development and maintenance of the **B2B SaaS VOD platform** — payment integrations, partner APIs, and database optimizations
+- Contributed backend features to the **FlexGold** gold trading platform (from late 2025), the first project using **NestJS**; prior backend work used **Express.js**, **Fastify**, and **Koa**
+- Continued development and maintenance of the **B2B SaaS VOD platform**: payment integrations, partner APIs, and database optimizations
 - Managed containerized deployments with **Docker** and **Kubernetes** (Helm charts)
 - Collaborated on cross-team API integrations and system architecture decisions
 
-### Working Student — simpleTechs GmbH, Berlin
+### Working Student, simpleTechs GmbH, Berlin
 
 _September 2019 until June 2024_
 
@@ -71,10 +71,10 @@ _September 2019 until June 2024_
 
 _2026_
 
-- Built a full-stack decision-support tool that runs a plain-language health check on any stock, ETF, or option before buying or selling — technical indicators, options data, news sentiment, and an AI second opinion
+- Built a full-stack decision-support tool that runs a plain-language health check on any stock, ETF, or option before buying or selling, covering technical indicators, options data, news sentiment, and an AI second opinion
 - FastAPI backend (Python) with a technical-indicator engine, Alpaca market/options data, and LLM-powered analysis; SvelteKit frontend with a health-check verdict per symbol
 - PostgreSQL, Redis, Docker; deployed on Render (API) and Cloudflare Pages (frontend)
-- Personal project: I invest in stocks and ETFs myself and wanted a fast way to check a ticker — and sometimes options — before buying or selling
+- Personal project: I invest in stocks and ETFs myself and wanted a fast way to check a ticker, and sometimes options, before buying or selling
 
 ### AI Microservice (NestJS + LangChain + RAG)
 
@@ -118,11 +118,11 @@ _2023 until 2024_
 
 ## Education
 
-### M.Sc. Media Informatics — TU Berlin
+### M.Sc. Media Informatics, TU Berlin
 
 _2022 until 2024 (incomplete)_
 
-### B.Sc. Medieninformatik — TU Berlin
+### B.Sc. Medieninformatik, TU Berlin
 
 _2016 until 2022_
 
@@ -132,52 +132,52 @@ _2016 until 2022_
 
 ## Languages
 
-- **Vietnamese** — Native
-- **German** — C2 (near-native)
-- **English** — C1 (advanced)
+- **Vietnamese**: Native
+- **German**: C2 (near-native)
+- **English**: C1 (advanced)
 
 ---
 
 ## Interests & Hobbies
 
-- **Local LLMs & AI experimentation** — Running models locally, exploring quantization, fine-tuning
-- **ComfyUI** — AI image generation workflows and custom node development
-- **Unreal Engine** — Game development with C++ and Blueprint visual scripting
+- **Local LLMs & AI experimentation**: Running models locally, exploring quantization, fine-tuning
+- **ComfyUI**: AI image generation workflows and custom node development
+- **Unreal Engine**: Game development with C++ and Blueprint visual scripting
 
 ---
 
 ## Work Arrangement
 
-- **Remote** — Fully open to remote work anywhere in the world; comfortable with asynchronous communication and distributed teams across time zones
-- **Hybrid / On-site** — Based in Nuremberg; open to hybrid or on-site roles in the Nuremberg metropolitan area with a reasonable commute
-- **Driver's license** — Yes
-- **Relocation** — Not actively looking, but open to discussing it for the right opportunity
+- **Remote**: Fully open to remote work anywhere in the world; comfortable with asynchronous communication and distributed teams across time zones
+- **Hybrid / On-site**: Based in Nuremberg; open to hybrid or on-site roles in the Nuremberg metropolitan area with a reasonable commute
+- **Driver's license**: Yes
+- **Relocation**: Not actively looking, but open to discussing it for the right opportunity
 
 ---
 
 ## Work Philosophy
 
-- I believe in shipping working software over perfect architecture — iterate based on real feedback
+- I believe in shipping working software over perfect architecture, iterating based on real feedback
 - I prefer lightweight processes that enable rather than constrain
-- Learning is continuous — I evaluate new tech by building something with it, not by reading about it
+- Learning is continuous. I evaluate new tech by building something with it, not by reading about it
 
 ---
 
 ## Soft Skills
 
-- **Teamwork** — Strong team player, shares knowledge freely, values constructive code reviews
-- **Intercultural competence** — Born in Vietnam, raised in Germany; comfortable in multicultural, multilingual environments (Vietnamese native, German C2, English C1)
-- **Constructive feedback** — Gives and receives feedback focused on principles and team standards, not personal preferences
-- **Resilience** — Stays calm under pressure, especially during production incidents; focuses on solving the problem
-- **Self-motivation** — Takes ownership from design to deployment, follows through on commitments without hand-holding
-- **Goal-orientation** — Breaks work into concrete steps, tracks progress transparently, delivers consistently
-- **Analytical thinking** — Breaks down complex problems, identifies root causes, makes data-driven decisions
-- **Eagerness to learn** — Continuously evaluates new tech hands-on rather than just reading about it
-- **Flexibility** — Adapts to changing requirements, new technologies, and shifting priorities without friction
-- **Stress tolerance** — Triage, cut scope, communicate transparently; prevents stress through good architecture
-- **Problem-solving** — Strategic approach: understand root cause first, gather data, reproduce, fix, document
-- **Strategic approach** — Starts with requirements and constraints, identifies critical paths and failure modes
-- **Quick comprehension** — Picks up new codebases, domains, and technologies rapidly
-- **Structured work approach** — Design docs / RFCs for complex features, small concrete steps, transparent progress tracking
-- **Active listening** — Understands others' perspectives before responding, especially in technical disagreements
-- **Openness & curiosity** — Genuinely curious about new approaches, tools, and domains; open to feedback and alternative viewpoints
+- **Teamwork**: Strong team player, shares knowledge freely, values constructive code reviews
+- **Intercultural competence**: Born in Vietnam, raised in Germany; comfortable in multicultural, multilingual environments (Vietnamese native, German C2, English C1)
+- **Constructive feedback**: Gives and receives feedback focused on principles and team standards, not personal preferences
+- **Resilience**: Stays calm under pressure, especially during production incidents; focuses on solving the problem
+- **Self-motivation**: Takes ownership from design to deployment, follows through on commitments without hand-holding
+- **Goal-orientation**: Breaks work into concrete steps, tracks progress transparently, delivers consistently
+- **Analytical thinking**: Breaks down complex problems, identifies root causes, makes data-driven decisions
+- **Eagerness to learn**: Continuously evaluates new tech hands-on rather than just reading about it
+- **Flexibility**: Adapts to changing requirements, new technologies, and shifting priorities without friction
+- **Stress tolerance**: Triage, cut scope, communicate transparently; prevents stress through good architecture
+- **Problem-solving**: Strategic approach: understand root cause first, gather data, reproduce, fix, document
+- **Strategic approach**: Starts with requirements and constraints, identifies critical paths and failure modes
+- **Quick comprehension**: Picks up new codebases, domains, and technologies rapidly
+- **Structured work approach**: Design docs / RFCs for complex features, small concrete steps, transparent progress tracking
+- **Active listening**: Understands others' perspectives before responding, especially in technical disagreements
+- **Openness & curiosity**: Genuinely curious about new approaches, tools, and domains; open to feedback and alternative viewpoints

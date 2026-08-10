@@ -1,11 +1,11 @@
 [
   {
     "question": "Can you tell me about yourself?",
-    "answer": "I'm a Backend Software Engineer with multiple years of experience building scalable systems — payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, and PostgreSQL, with experience across Express.js, Fastify, Koa, and more recently NestJS. I've spent most of my career at simpleTechs GmbH, a small software company in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
+    "answer": "I'm a Backend Software Engineer with multiple years of experience building scalable systems: payments, authentication, CMS, APIs, and AI-powered services. I specialize in TypeScript, Node.js, and PostgreSQL, with experience across Express.js, Fastify, Koa, and more recently NestJS. I've spent most of my career at simpleTechs GmbH, a small software company in Berlin, where I started as a working student and grew into a full Software Engineer role. I'm passionate about clean architecture, developer productivity, and AI/LLM integration."
   },
   {
     "question": "Can you tell me about VEXARIUM?",
-    "answer": "VEXARIUM is a personal project I built — a pre-trade decision-support tool that runs a plain-language health check on any stock, ETF, or option before I buy or sell. I created it because I invest in stocks and ETFs myself and wanted a fast way to check a ticker, and sometimes options, before deciding. The backend is FastAPI (Python) with a technical-indicator engine, Alpaca market and options data, news sentiment, and an LLM-powered second opinion; the frontend is SvelteKit with a health-check verdict for each symbol. It uses PostgreSQL and Redis is deployed on Render (API) and Cloudflare Pages (frontend). It also gave me hands-on experience with Python and SvelteKit beyond my usual TypeScript/Node.js stack."
+    "answer": "VEXARIUM is a personal project I built. It is a pre-trade decision-support tool that runs a plain-language health check on any stock, ETF, or option before I buy or sell. I created it because I invest in stocks and ETFs myself and wanted a fast way to check a ticker, and sometimes options, before deciding. The backend is FastAPI (Python) with a technical-indicator engine, Alpaca market and options data, news sentiment, and an LLM-powered second opinion; the frontend is SvelteKit with a health-check verdict for each symbol. It uses PostgreSQL and Redis, deployed on Render (API) and Cloudflare Pages (frontend). It also gave me hands-on experience with Python and SvelteKit beyond my usual TypeScript/Node.js stack."
   },
   {
     "question": "What is your strongest programming language?",
@@ -13,7 +13,7 @@
   },
   {
     "question": "What backend frameworks are you experienced with?",
-    "answer": "I've worked extensively with Express.js, Fastify, and Koa for years — those were my primary frameworks for most of my career. NestJS came later when I started working on the FlexGold gold trading platform in late 2025. I've built production systems with all of them. On the Python side, I've worked with FastAPI for AI microservices. The backend of this resume service is built on Python. I understand the tradeoffs between opinionated frameworks like NestJS (great for large teams and complex domains) and minimal ones like Express, Fastify and Koa (better for simple APIs and microservices)."
+    "answer": "I've worked extensively with Express.js, Fastify, and Koa for years. Those were my primary frameworks for most of my career. NestJS came later when I started working on the FlexGold gold trading platform in late 2025. I've built production systems with all of them. On the Python side, I've worked with FastAPI for AI microservices. The backend of this resume service is built on Python. I understand the tradeoffs between opinionated frameworks like NestJS (great for large teams and complex domains) and minimal ones like Express, Fastify and Koa (better for simple APIs and microservices)."
   },
   {
     "question": "Do you have experience with databases?",
@@ -21,15 +21,15 @@
   },
   {
     "question": "Have you worked with cloud services?",
-    "answer": "Yes. I've used AWS S3 for file storage, Google GCP to configuring Pub/Sub, and I'm experienced with Docker and Kubernetes for containerized deployments. I've written Helm charts for managing K8s deployments. I'm also familiar with Cloudflare's platform — Workers, Pages, and D1."
+    "answer": "Yes. I've used AWS S3 for file storage, Google Cloud Pub/Sub, and I'm experienced with Docker and Kubernetes for containerized deployments. I've written Helm charts for managing K8s deployments. I'm also familiar with Cloudflare's platform, including Workers, Pages, and D1."
   },
   {
     "question": "Tell me about a challenging project you've worked on.",
-    "answer": "The AI Microservices I built at simpleTechs was particularly challenging and rewarding since I was the only person with knowledge about AI and LLM intergration. I had to design a RAG (Retrieval-Augmented Generation) pipeline from scratch — chunking incoming data, generating embeddings, storing them in PostgreSQL with pgvector, and building prompt chains with LangChain. The hard part was making it production-grade: handling rate limits from the LLM provider, implementing fallback strategies, optimizing token usage to keep costs down, and ensuring responses were accurate and grounded in the source documents. It taught me a lot about the practical challenges of shipping AI features."
+    "answer": "The AI Microservices I built at simpleTechs was particularly challenging and rewarding since I was the only person with knowledge about AI and LLM integration. I had to design a RAG (Retrieval-Augmented Generation) pipeline from scratch. This covered chunking incoming data, generating embeddings, storing them in PostgreSQL with pgvector, and building prompt chains with LangChain. The hard part was making it production-grade: handling rate limits from the LLM provider, implementing fallback strategies, optimizing token usage to keep costs down, and ensuring responses were accurate and grounded in the source documents. It taught me a lot about the practical challenges of shipping AI features."
   },
   {
     "question": "Do you have experience with AI or machine learning?",
-    "answer": "Yes, I've been working with AI/LLMs professionally since 2025. I built a production AI microservice using NestJS, LangChain, and OpenAI — implementing RAG pipelines, vector search with pgvector, and prompt engineering. I also experiment with local LLMs in my free time, run ComfyUI for image generation workflows, and keep up with the fast-moving AI landscape. I understand the practical side: token optimization, cost management, prompt design, and grounding LLM responses in real data."
+    "answer": "Yes, I've been working with AI/LLMs professionally since 2025. I built a production AI microservice using NestJS, LangChain, and OpenAI, implementing RAG pipelines, vector search with pgvector, and prompt engineering. I also experiment with local LLMs in my free time, run ComfyUI for image generation workflows, and keep up with the fast-moving AI landscape. I understand the practical side: token optimization, cost management, prompt design, and grounding LLM responses in real data."
   },
   {
     "question": "What is your experience with microservices?",
@@ -37,11 +37,11 @@
   },
   {
     "question": "How do you handle testing in your projects?",
-    "answer": "I believe in a pragmatic testing pyramid. Unit tests with Jest for business logic and utilities, integration tests for API endpoints and database interactions, and a few key E2E tests for critical user flows. I write tests alongside code and sometime before code. I also updated the existing legacy services at simpleTechs with test cases to ensure future changes does not break the underlying logic. I also use test fixtures and factories to make tests maintainable. I don't aim for 100% coverage — I focus on testing behavior that would be painful if it broke."
+    "answer": "I believe in a pragmatic testing pyramid. Unit tests with Jest for business logic and utilities, integration tests for API endpoints and database interactions, and a few key E2E tests for critical user flows. I write tests alongside code and sometime before code. I also updated the existing legacy services at simpleTechs with test cases to ensure future changes does not break the underlying logic. I also use test fixtures and factories to make tests maintainable. I don't aim for 100% coverage. I focus on testing behavior that would be painful if it broke."
   },
   {
     "question": "What is your experience with CI/CD?",
-    "answer": "I've set up CI/CD pipelines with Bitbucket Pipeline — running tests and building Docker images on every PR. For deployment, I've used Helm charts with Kubernetes for rolling updates and rollbacks."
+    "answer": "I've set up CI/CD pipelines with Bitbucket Pipeline, running tests and building Docker images on every PR. For deployment, I've used Helm charts with Kubernetes for rolling updates and rollbacks."
   },
   {
     "question": "Where do you see yourself in your career?",
@@ -53,11 +53,11 @@
   },
   {
     "question": "What is your educational background?",
-    "answer": "I studied Media Informatics at TU Berlin — a mix of computer science, human-computer interaction, and media technology. I completed my Bachelor's degree in 2022 and started a Master's program, which I didn't finish because I wanted to focus on my professional career at simpleTechs. I believe my strongest learning has been on the job, building real systems, making mistakes, and fixing them."
+    "answer": "I studied Media Informatics at TU Berlin, a mix of computer science, human-computer interaction, and media technology. I completed my Bachelor's degree in 2022 and started a Master's program, which I didn't finish because I wanted to focus on my professional career at simpleTechs. I believe my strongest learning has been on the job, building real systems, making mistakes, and fixing them."
   },
   {
     "question": "Why are you interested in this position?",
-    "answer": "I'm looking for a role where I can apply my backend engineering skills to meaningful problems, ideally with an AI component. I've spent 6 years building systems at simpleTechs and I'm ready for new challenges — different domains, different scales, different teams, different technologies I can work myself into. I'm particularly drawn to companies that value clean architecture, engineering excellence, and have a strong engineering culture."
+    "answer": "I'm looking for a role where I can apply my backend engineering skills to meaningful problems, ideally with an AI component. I've spent 6 years building systems at simpleTechs and I'm ready for new challenges: different domains, different scales, different teams, different technologies I can work myself into. I'm particularly drawn to companies that value clean architecture, engineering excellence, and have a strong engineering culture."
   },
   {
     "question": "How do you stay updated with new technologies?",
@@ -73,7 +73,7 @@
   },
   {
     "question": "Do you have experience with Docker and Kubernetes?",
-    "answer": "Yes, I've used both extensively. I containerize all my services with Docker — multi-stage builds to keep images small. For orchestration, I use Kubernetes with Helm charts for managing deployments, config maps, secrets, and ingress. I understand the operational side too — reading pod logs, debugging crash loops, and managing rolling updates."
+    "answer": "Yes, I've used both extensively. I containerize all my services with Docker, using multi-stage builds to keep images small. For orchestration, I use Kubernetes with Helm charts for managing deployments, config maps, secrets, and ingress. I understand the operational side too, including reading pod logs, debugging crash loops, and managing rolling updates."
   },
   {
     "question": "What is your preferred development workflow?",
@@ -85,7 +85,7 @@
   },
   {
     "question": "What tools do you use for project management?",
-    "answer": "I've worked with Jira. I prefer lightweight processes — clear tickets with acceptance criteria, regular standups, and retrospectives that actually lead to improvements. The tool matters less than the team's discipline in keeping tickets updated and communicating blockers early."
+    "answer": "I've worked with Jira. I prefer lightweight processes: clear tickets with acceptance criteria, regular standups, and retrospectives that actually lead to improvements. The tool matters less than the team's discipline in keeping tickets updated and communicating blockers early."
   },
   {
     "question": "What programming languages do you know besides TypeScript?",
@@ -209,10 +209,10 @@
   },
   {
     "question": "Is he open to remote work or relocation?",
-    "answer": "Yes. I'm fully open to remote work anywhere in the world — I'm comfortable working asynchronously across time zones and have experience collaborating with international partners like Samsung and Waipu. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg metropolitan area where the commute is reasonable. I have a driver's license. I'm not looking to relocate at this time, but I'm open to discussing it for the right opportunity."
+    "answer": "Yes. I'm fully open to remote work anywhere in the world. I'm comfortable working asynchronously across time zones and have experience collaborating with international partners like Samsung and Waipu. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg metropolitan area where the commute is reasonable. I have a driver's license. I'm not looking to relocate at this time, but I'm open to discussing it for the right opportunity."
   },
   {
-    "question": "What is your preferred work arrangement — remote, hybrid, or on-site?",
-    "answer": "I'm flexible. I'm fully open to remote work across the globe — I'm used to asynchronous communication, multilingual collaboration, and working with distributed teams. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg area with a reasonable commute. I have a driver's license. I value flexibility but I'm happy to be on-site when the team needs it."
+    "question": "What is your preferred work arrangement: remote, hybrid, or on-site?",
+    "answer": "I'm flexible. I'm fully open to remote work across the globe. I'm used to asynchronous communication, multilingual collaboration, and working with distributed teams. For hybrid or on-site roles, I'm based in Nuremberg and prefer positions in the Nuremberg area with a reasonable commute. I have a driver's license. I value flexibility but I'm happy to be on-site when the team needs it."
   }
 ]
